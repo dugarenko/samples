@@ -17,7 +17,7 @@ namespace Pharmacy.UnitTest.Models
         [MedicamentsParameters]
         public async Task GetAll_NegativeTest(QueryMedicaments filter)
         {
-            // Pobranie kontekstu bazy danych.
+            // Utworzenie kontekstu bazy danych.
             var dbContext = AppDbContextMocker.GetMemoryDbContext(nameof(GetAll_NegativeTest) + Guid.NewGuid());
 
             try
@@ -28,8 +28,10 @@ namespace Pharmacy.UnitTest.Models
                 // Utworzenie instancji kontrolera.
                 var controller = new MedicamentsController(dbContext, new Logger<MedicamentsController>(new LoggerFactory()));
 
-                // Pobranie wyniku.
+                // Pobranie elementów wed³ug filtra.
                 var response = await controller.GetAll(filter);
+
+                // Pobranie wyniku.
                 var result = response.Value;
 
                 // Assert.
@@ -46,7 +48,7 @@ namespace Pharmacy.UnitTest.Models
         [MedicamentsParameters]
         public async Task Get_NegativeTest(object id)
         {
-            // Pobranie kontekstu bazy danych.
+            // Utworzenie kontekstu bazy danych.
             var dbContext = AppDbContextMocker.GetMemoryDbContext(nameof(Get_NegativeTest) + Guid.NewGuid());
 
             try
@@ -57,8 +59,10 @@ namespace Pharmacy.UnitTest.Models
                 // Utworzenie instancji kontrolera.
                 var controller = new MedicamentsController(dbContext, new Logger<MedicamentsController>(new LoggerFactory()));
 
-                // Pobranie wyniku.
+                // Pobranie elementu o wskazanym ID.
                 var response = await controller.Get((int)id);
+
+                // Pobranie wyniku.
                 var result = response.Value;
 
                 // Assert.
@@ -75,7 +79,7 @@ namespace Pharmacy.UnitTest.Models
         [MedicamentsParameters]
         public async Task Put_NegativeTest(int id, Medicament medicament)
         {
-            // Pobranie kontekstu bazy danych.
+            // Utworzenie kontekstu bazy danych.
             var dbContext = AppDbContextMocker.GetMemoryDbContext(nameof(Put_NegativeTest) + Guid.NewGuid());
 
             try
@@ -88,7 +92,7 @@ namespace Pharmacy.UnitTest.Models
 
                 try
                 {
-                    // Pobranie wyniku.
+                    // Aktualizacja elementu.
                     var response = await controller.Put((int)id, medicament);
 
                     if (response is NoContentResult)
@@ -113,7 +117,7 @@ namespace Pharmacy.UnitTest.Models
         [MedicamentsParameters]
         public async Task Post_NegativeTest(Medicament medicament)
         {
-            // Pobranie kontekstu bazy danych.
+            // Utworzenie kontekstu bazy danych.
             var dbContext = AppDbContextMocker.GetMemoryDbContext(nameof(Post_NegativeTest) + Guid.NewGuid());
 
             try
@@ -124,18 +128,20 @@ namespace Pharmacy.UnitTest.Models
                 // Utworzenie instancji kontrolera.
                 var controller = new MedicamentsController(dbContext, new Logger<MedicamentsController>(new LoggerFactory()));
 
-                // Pobranie wyniku.
+                // Dodanie elementu.
                 var response = await controller.Post(medicament);
+
+                // Pobranie wyniku.
                 var result = (response.Result as CreatedAtActionResult).Value as Medicament;
 
                 // Assert.
-                Assert.IsFalse((result != null && result.IdMedicament > 0), "Uda³o siê dodaæ element: '{0}'.", result.Name);
+                Assert.IsFalse(result != null && result.IdMedicament > 0, "Uda³o siê dodaæ element: '{0}'.", result.Name);
             }
             catch (AssertFailedException)
             {
                 throw;
             }
-            catch (Exception ex)
+            catch
             { }
             finally
             {
@@ -148,7 +154,7 @@ namespace Pharmacy.UnitTest.Models
         [MedicamentsParameters]
         public async Task Delete_NegativeTest(int id)
         {
-            // Pobranie kontekstu bazy danych.
+            // Utworzenie kontekstu bazy danych.
             var dbContext = AppDbContextMocker.GetMemoryDbContext(nameof(Delete_NegativeTest) + Guid.NewGuid());
 
             try
@@ -159,8 +165,11 @@ namespace Pharmacy.UnitTest.Models
                 // Utworzenie instancji kontrolera.
                 var controller = new MedicamentsController(dbContext, new Logger<MedicamentsController>(new LoggerFactory()));
 
-                // Pobranie wyniku.
-                var response = await controller.Delete(id);
+                // Usuniêcie elementu.
+                await controller.Delete(id);
+
+                // Pobranie elementu.
+                var response = await controller.Get(id);
                 var result = response.Value;
 
                 // Assert.

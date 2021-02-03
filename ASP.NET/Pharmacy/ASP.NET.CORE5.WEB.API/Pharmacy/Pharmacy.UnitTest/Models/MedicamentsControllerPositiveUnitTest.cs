@@ -127,10 +127,10 @@ namespace Pharmacy.UnitTest.Models
                 var response = await controller.Post(medicament);
 
                 // Pobranie wyniku.
-                var result = response.Result as CreatedAtActionResult;
-                
+                var result = (response.Result as CreatedAtActionResult).Value as Medicament;
+
                 // Assert.
-                Assert.IsTrue(result.Value != null, "Nie uda³o siê dodaæ elementu: '{0}'.", medicament.Name);
+                Assert.IsTrue(result != null && result.IdMedicament > 0, "Nie uda³o siê dodaæ elementu: '{0}'.", medicament.Name);
             }
             finally
             {
