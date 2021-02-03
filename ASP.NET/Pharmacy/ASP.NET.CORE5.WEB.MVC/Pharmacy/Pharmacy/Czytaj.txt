@@ -1,0 +1,4 @@
+﻿1. Wymagania.
+   Do uruchomienia projektu wymagana jest baza danych, którą można utworzyć poniższym poleceniem z Package Manager Console:
+   
+   update-database –verbose

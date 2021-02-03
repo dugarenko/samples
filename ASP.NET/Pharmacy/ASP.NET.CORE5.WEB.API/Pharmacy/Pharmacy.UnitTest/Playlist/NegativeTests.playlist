@@ -1,0 +1,54 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Pharmacy.UnitTest" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Pharmacy.UnitTest.Models" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="MedicamentsControllerNegativeUnitTest" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerNegativeUnitTest.Delete_NegativeTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Delete_NegativeTest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerNegativeUnitTest.GetAll_NegativeTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetAll_NegativeTest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerNegativeUnitTest.Get_NegativeTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Get_NegativeTest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerNegativeUnitTest.Post_NegativeTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Post_NegativeTest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerNegativeUnitTest.Put_NegativeTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Put_NegativeTest" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>

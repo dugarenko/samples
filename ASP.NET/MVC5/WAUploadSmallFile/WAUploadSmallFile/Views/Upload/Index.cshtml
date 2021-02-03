@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Upload Small Files</h2>
+
+@using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <p>Upload one file:</p>
+        <input type="file" name="file" />
+        <input type="submit" value="Upload" />
+    </div>
+}
+
+@using (Html.BeginForm("UploadMultipleFiles", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <p>Upload multiple files:</p>
+        <input type="file" name="files" multiple />
+        <input type="submit" value="Upload" />
+    </div>
+}

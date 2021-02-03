@@ -1,0 +1,199 @@
+{
+	"info": {
+		"_postman_id": "f90ac12b-8063-4609-9a31-e06582d226c8",
+		"name": "ApiMedicaments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:39015/api/medicaments",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4e3f575b-5af3-4003-a230-b45e0c808852",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idProducer\": 1,\n    \"name\": \"Lek1\",\n    \"price\": 25.99,\n    \"description\": \"Opis Lek1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:39015/api/medicaments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "39015",
+					"path": [
+						"api",
+						"medicaments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:39015/api/medicaments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:39015/api/medicaments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "39015",
+					"path": [
+						"api",
+						"medicaments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:39015/api/medicaments/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:39015/api/medicaments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "39015",
+					"path": [
+						"api",
+						"medicaments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:39015/api/medicaments?idProducer=1&price=5",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:39015/api/medicaments?idProducer=1&price=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "39015",
+					"path": [
+						"api",
+						"medicaments"
+					],
+					"query": [
+						{
+							"key": "idProducer",
+							"value": "1"
+						},
+						{
+							"key": "price",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:39015/api/medicaments/1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idMedicament\": 1,\n    \"idProducer\": 1,\n    \"name\": \"Lek1\",\n    \"price\": 25.99,\n    \"description\": \"Opis Lek1 - zmieniony\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:39015/api/medicaments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "39015",
+					"path": [
+						"api",
+						"medicaments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:39015/api/medicaments/1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:39015/api/medicaments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "39015",
+					"path": [
+						"api",
+						"medicaments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

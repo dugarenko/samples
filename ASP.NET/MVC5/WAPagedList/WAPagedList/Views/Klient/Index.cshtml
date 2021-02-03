@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<Klient>
+@using PagedList.Mvc;
+@using System.Data.SqlClient;
+@{
+    FilterKlient filter = ViewBag.FilterKlient as FilterKlient;
+    ViewBag.Title = "Index";
+}
+<section>
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(m => filter.Page)
+        @Html.HiddenFor(m => filter.SortOrder)
+        @Html.HiddenFor(m => filter.SortColumn)
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div>
+                        @Html.LabelFor(m => filter.Nazwa, new { @class = "control-label" })
+                    </div>
+                    <div class="pull-left search">
+                        @Html.TextBoxFor(m => filter.Nazwa, new { @class = "form-control " })
+                    </div>
+                    <div>
+                        <input type="submit" value="Filtruj" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Nazwa", "Index", new {
+                   Page = filter.Page ?? 1,
+                   SortOrder = (filter.SortOrder == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.Ascending,
+                   SortColumn = "Nazwa",
+                   Nazwa = filter.Nazwa})
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Nazwa
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdKlient }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.IdKlient }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdKlient })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <br />
+    Strona @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) z @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, SortOrder = filter.SortOrder, Nazwa = filter.Nazwa, SortColumn = filter.SortColumn }))
+</section>

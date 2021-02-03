@@ -1,0 +1,21 @@
+﻿1. Database First.
+   In Visual Studio, select menu Tools -> NuGet Package Manger -> Package Manger Console and run the following command:
+
+   Scaffold-DbContext "Data Source=.\SQL2017;Initial Catalog=Pharmacy;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -project Pharmacy.Domain -OutputDir Models -ContextDir Models -Context ApplicationDbContext -DataAnnotations -force -table Medicament,Producer,City
+
+   If you use dotnet CLI, enter the following command:
+
+   dotnet ef dbcontext scaffold "Data Source=.\SQL2017;Initial Catalog=Pharmacy;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -o Models --context-dir Models -c ApplicationDbContext -f -t Medicament,Producer,City
+
+2. Application First.
+   In Visual Studio, open NuGet Package Manager Console from Tools -> NuGet Package Manager -> Package Manager Console and enter the following command:
+
+   add-migration PharmacyDB
+   ...
+   update-database –verbose
+
+   If you use dotnet CLI, enter the following command:
+   
+   dotnet ef migrations add PharmacyDB
+   ...
+   dotnet ef database update

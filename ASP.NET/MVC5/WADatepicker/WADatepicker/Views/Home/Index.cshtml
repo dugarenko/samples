@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<br />
+<br />
+
+<!-- 1. Domyślna obsługa przez bootstrap-a (data-provide). -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-format="yyyy-mm-dd"
+                 data-date-language="pl" data-date-today-Btn="linked" data-date-today-Highlight="true">
+                <input type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Wprowadź datę" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar" />
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Obsługa statyczna skryptem, szukanie po [class="input-group date" - '.input-group.date']. -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date">
+                <input type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Wprowadź datę" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar" />
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Automatyczna obsługa skryptem wszystkich kontrolek 'datepicker', szukanie po [class="datepicker" - jQuery('.datepicker')]. -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date datepicker" data-autoclose="true" clearBtn="true" data-format="yyyy-mm-dd" data-lang="pl" todayBtn="true" todayHighlight="true">
+                <input type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Wprowadź datę" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar" />
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Zakres dat. Automatyczna obsługa skryptem wszystkich kontrolek 'datepicker', szukanie po [class="datepicker" - jQuery('.datepicker')]. -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-daterange input-group datepicker" data-autoclose="false" clearBtn="true" data-format="yyyy-mm-dd" data-lang="pl" todayBtn="true" todayHighlight="true">
+                <input type="text" class="input-sm form-control" name="start" value="@DateTime.Now.AddDays(-5).ToString("yyyy-MM-dd")" placeholder="Wprowadź datę od" />
+                <span class="input-group-addon">do</span>
+                <input type="text" class="input-sm form-control" name="end" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Wprowadź datę do" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Zakres dat. Automatyczna obsługa skryptem wszystkich kontrolek 'datepicker', szukanie po [class="datepicker" - jQuery('.datepicker')]. -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-daterange datepicker" data-autoclose="false" data-format="yyyy-mm-dd" data-lang="pl" todayBtn="true" todayHighlight="true">
+                <h5>Od:</h5>
+                <input type="text" class="input-sm form-control" name="start" value="@DateTime.Now.AddDays(-5).ToString("yyyy-MM-dd")" placeholder="Wprowadź datę od" />
+                <h5>Do:</h5>
+                <input type="text" class="input-sm form-control" name="end" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Wprowadź datę do" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        // 2. Obsługa statyczna skryptem, szukanie po [class="input-group date" - '.input-group.date'].
+        $('.input-group.date').datepicker({
+            autoclose: true,
+            clearBtn: true,
+            format: 'yyyy-mm-dd',
+            language: 'pl',
+            todayBtn: "linked",
+            todayHighlight: true
+        });
+
+        // 3. Automatyczna obsługa skryptem wszystkich kontrolek 'datepicker', szukanie po [class="datepicker" - jQuery('.datepicker')].
+        pickers();
+        function pickers() {
+            var container = jQuery('.datepicker');
+            if (container.length > 0) {
+                if (jQuery().datepicker) {
+                    container.each(function () {
+                        var at = jQuery(this);
+                        jQuery(this).datepicker({
+                            autoclose: at.attr('data-autoclose') == "false" ? false : true,
+                            calendarWeeks: at.attr('data-calendarWeeks') == "false" ? false : true,
+                            clearBtn: at.attr('data-clearBtn') == "false" ? false : true,
+                            format: at.attr('data-format') || 'yyyy-mm-dd',
+                            language: at.attr('data-lang') || 'en',
+                            todayBtn: at.attr('data-todayBtn') == "false" ? false : "linked",
+                            todayHighlight: at.attr('data-todayHighlight') == "false" ? false : true
+                        });
+                    });
+                }
+            }
+        }
+    </script>
+}

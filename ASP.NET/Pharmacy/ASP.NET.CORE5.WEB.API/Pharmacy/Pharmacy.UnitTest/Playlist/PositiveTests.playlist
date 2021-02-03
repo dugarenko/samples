@@ -1,0 +1,62 @@
+<Playlist Version="2.0">
+  <Rule Match="Any">
+    <Property Name="Test" Value="Pharmacy.UnitTest.MedicamentsControllerPositiveUnitTest.GetAll_PositiveTest" />
+    <Property Name="Test" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.Get_PositiveTest" />
+    <Property Name="Test" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.Delete_PositiveTest" />
+    <Property Name="Test" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.GetAll_PositiveTest" />
+    <Property Name="Test" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.Post_PositiveTest" />
+    <Property Name="Test" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.Put_PositiveTest" />
+  </Rule>
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Pharmacy.UnitTest" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Pharmacy.UnitTest.Models" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="MedicamentsControllerPositiveUnitTest" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.Delete_PositiveTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Delete_PositiveTest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.GetAll_PositiveTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetAll_PositiveTest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.Get_PositiveTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Get_PositiveTest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.Post_PositiveTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Post_PositiveTest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Pharmacy.UnitTest.Models.MedicamentsControllerPositiveUnitTest.Put_PositiveTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Put_PositiveTest" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>

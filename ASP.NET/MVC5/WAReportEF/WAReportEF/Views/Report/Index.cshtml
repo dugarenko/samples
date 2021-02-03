@@ -1,0 +1,104 @@
+﻿@model ReportView
+@{
+    Report _report = new Report();
+    ViewBag.Title = "Raport";
+}
+<section>
+    @using (Html.BeginForm())
+    {
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-transparent">
+                        <h2 class="panel-title bold">Filtr</h2>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.DropDownListFor(m => m.Filter.Local, Model.Locals, "--- Wybierz lokal ---", new { @class = "form-control" })
+                        </div>
+                        <!-- 1. Domyślna obsługa przez bootstrap-a (data-provide). -->
+                        <div class="form-group">
+                            <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-clear-Btn="true"
+                                 data-date-format="yyyy-mm-dd" data-date-language="pl" data-date-today-Btn="linked" data-date-today-Highlight="true"
+                                 data-date-days-Of-Week-Highlighted="0,6">
+                                <span class="input-group-addon">
+                                    <span>Od</span>
+                                </span>
+                                @Html.TextBoxFor(m => m.Filter.DateFrom, new { @class = "form-control", placeholder = "Wprowadź datę od" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-clear-Btn="true"
+                                 data-date-format="yyyy-mm-dd" data-date-language="pl" data-date-today-Btn="linked" data-date-today-Highlight="true"
+                                 data-date-days-Of-Week-Highlighted="0,6">
+                                <span class="input-group-addon">
+                                    <span>Do</span>
+                                </span>
+                                @Html.TextBoxFor(m => m.Filter.DateTo, new { @class = "form-control", placeholder = "Wprowadź datę do" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Zatwierdź" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            </div>
+
+            <div class="col-md-8 table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(m => _report.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(m => _report.Date)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(m => _report.User)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(m => _report.Local)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Reports)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Date.ToString("yyyy-MM-dd")
+                                </td>
+                                <td>
+                                    @item.User
+                                </td>
+                                <td>
+                                    @item.Local
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/bootstrap-datepicker")
+}

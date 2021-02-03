@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adres">
+          <Key>
+            <PropertyRef Name="IdAdres" />
+          </Key>
+          <Property Name="IdAdres" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdKlient" Type="int" Nullable="false" />
+          <Property Name="Ulica" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumerBudynku" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Klient">
+          <Key>
+            <PropertyRef Name="IdKlient" />
+          </Key>
+          <Property Name="IdKlient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Adres_Klient">
+          <End Role="Klient" Type="Self.Klient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Adres" Type="Self.Adres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klient">
+              <PropertyRef Name="IdKlient" />
+            </Principal>
+            <Dependent Role="Adres">
+              <PropertyRef Name="IdKlient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestModelStoreContainer">
+          <EntitySet Name="Adres" EntityType="Self.Adres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Klient" EntityType="Self.Klient" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Adres_Klient" Association="Self.FK_Adres_Klient">
+            <End Role="Klient" EntitySet="Klient" />
+            <End Role="Adres" EntitySet="Adres" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adres">
+          <Key>
+            <PropertyRef Name="IdAdres" />
+          </Key>
+          <Property Name="IdAdres" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdKlient" Type="Int32" Nullable="false" />
+          <Property Name="Ulica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumerBudynku" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Klient" Relationship="Self.FK_Adres_Klient" FromRole="Adres" ToRole="Klient" />
+        </EntityType>
+        <EntityType Name="Klient">
+          <Key>
+            <PropertyRef Name="IdKlient" />
+          </Key>
+          <Property Name="IdKlient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Adres" Relationship="Self.FK_Adres_Klient" FromRole="Klient" ToRole="Adres" />
+        </EntityType>
+        <Association Name="FK_Adres_Klient">
+          <End Role="Klient" Type="Self.Klient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Adres" Type="Self.Adres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klient">
+              <PropertyRef Name="IdKlient" />
+            </Principal>
+            <Dependent Role="Adres">
+              <PropertyRef Name="IdKlient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adres" EntityType="Self.Adres" />
+          <EntitySet Name="Klient" EntityType="Self.Klient" />
+          <AssociationSet Name="FK_Adres_Klient" Association="Self.FK_Adres_Klient">
+            <End Role="Klient" EntitySet="Klient" />
+            <End Role="Adres" EntitySet="Adres" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestModelStoreContainer" CdmEntityContainer="TestEntities">
+          <EntitySetMapping Name="Adres">
+            <EntityTypeMapping TypeName="TestModel.Adres">
+              <MappingFragment StoreEntitySet="Adres">
+                <ScalarProperty Name="IdAdres" ColumnName="IdAdres" />
+                <ScalarProperty Name="IdKlient" ColumnName="IdKlient" />
+                <ScalarProperty Name="Ulica" ColumnName="Ulica" />
+                <ScalarProperty Name="NumerBudynku" ColumnName="NumerBudynku" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Klient">
+            <EntityTypeMapping TypeName="TestModel.Klient">
+              <MappingFragment StoreEntitySet="Klient">
+                <ScalarProperty Name="IdKlient" ColumnName="IdKlient" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

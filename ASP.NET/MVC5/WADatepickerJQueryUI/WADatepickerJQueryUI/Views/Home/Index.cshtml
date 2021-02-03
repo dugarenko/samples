@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<br />
+<br />
+
+<!-- 2. Obsługa statyczna skryptem, szukanie po [class="input-group date" - '.input-group.date']. -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date">
+                <span class="input-group-addon">
+                    <span>Data</span>
+                </span>
+                <input type="text" class="form-control datepicker" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Wprowadź datę" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Automatyczna obsługa skryptem wszystkich kontrolek 'datepicker', szukanie po [class="datepicker" - jQuery('.datepicker')]. -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date">
+                <span class="input-group-addon">
+                    <span>Data</span>
+                </span>
+                <input type="text" class="form-control datepicker" data-showButtonPanel="true" data-changeMonth="true" data-changeYear="true"
+                       value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Wprowadź datę" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jquery-ui")
+
+    <script type="text/javascript">
+        // 2. Obsługa statyczna skryptem, szukanie po [class="input-group date" - '.input-group.date'].
+        //$(function () {
+        //    var options = $.datepicker.regional["pl"];
+        //    options['showButtonPanel'] = true;
+        //    options['changeMonth'] = true;
+        //    options['changeYear'] = true;
+        //    $('.datepicker').datepicker(options);
+        //});
+
+        // 3. Automatyczna obsługa skryptem wszystkich kontrolek 'datepicker', szukanie po [class="datepicker" - jQuery('.datepicker')].
+        pickers();
+        function pickers() {
+            var container = jQuery('.datepicker');
+            if (container.length > 0) {
+                if (jQuery().datepicker) {
+                    container.each(function () {
+                        var at = jQuery(this);
+                        var options = $.datepicker.regional["pl"];
+                        options['showButtonPanel'] = at.attr('data-showButtonPanel') == "false" ? false : true;
+                        options['changeMonth'] = at.attr('data-changeMonth') == "false" ? false : true;
+                        options['changeYear'] = at.attr('data-changeYear') == "false" ? false : true;
+                        jQuery(this).datepicker(options);
+                    });
+                }
+            }
+        }
+    </script>
+}

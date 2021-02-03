@@ -1,0 +1,107 @@
+﻿@using System.Data.SqlClient;
+@model IPagedList<Product>
+@{
+    ProductFilter productFilter = ViewBag.ProductFilter as ProductFilter;
+    ViewBag.Title = "Index";
+}
+<section>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-heading-transparent">
+                    <h2 class="panel-title bold">Filtr</h2>
+                </div>
+
+                <div class="panel-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.HiddenFor(m => productFilter.PageNumber)
+                        @Html.HiddenFor(m => productFilter.SortOrder)
+                        @Html.HiddenFor(m => productFilter.SortColumn)
+                        @Html.HiddenFor(m => productFilter.CategoryName)
+
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => productFilter.ProductName, new { @class = "control-label" })
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => productFilter.ProductName, new { @class = "form-control " })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => productFilter.UnitPrice, new { @class = "control-label" })
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => productFilter.UnitPrice, new { @class = "form-control " })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Filtruj" class="btn btn-default" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            @Html.ActionLink("Nazwa produktu", "Index", productFilter.GetRouteValues(() => productFilter.ProductName, true))
+                        </th>
+                        <th>
+                            @Html.ActionLink("Nazwa kategorii", "Index", productFilter.GetRouteValues(() => productFilter.CategoryName, true))
+                        </th>
+                        <th>
+                            @Html.ActionLink("Cena jednostkowa", "Index", productFilter.GetRouteValues(() => productFilter.UnitPrice, true))
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Category.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.UnitPrice)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.IdProduct }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.IdProduct }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.IdProduct })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div>
+                @Html.ActionLink("Dodaj nowy", "Create", null, new { @class = "btn btn-primary pull-right" })
+            </div>
+
+            <div>
+                Strona @(Model.PageCount < Model.PageNumber ? 1 : Model.PageNumber) z @Model.PageCount
+                @Html.PagedListPager(Model, PageNumber => Url.Action("Index", new
+                    {
+                        PageNumber,
+                        SortOrder = productFilter.SortOrder,
+                        SortColumn = productFilter.SortColumn,
+                        ProductName = productFilter.ProductName,
+                        CategoryName = productFilter.CategoryName,
+                        UnitPrice = productFilter.UnitPrice
+                    }))
+            </div>
+        </div>
+    </div>
+</section>

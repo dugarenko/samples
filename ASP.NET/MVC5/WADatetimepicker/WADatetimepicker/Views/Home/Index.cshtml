@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<br />
+<br />
+
+<!-- 2. Obsługa statyczna skryptem, szukanie po [class="input-group date" - '.input-group.date']. -->
+<div class="row">
+    <div class='col-md-3'>
+        <div class="form-group">
+            <div class='input-group date' id="datetimepicker1">
+                <input type='text' class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" placeholder="Wprowadź datę" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Automatyczna obsługa skryptem wszystkich kontrolek 'datetimepicker', szukanie po [class="datetimepicker" - jQuery('.datetimepicker')]. -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date datetimepicker" data-keepOpen="false" data-format="YYYY-MM-DD" data-lang="pl" data-showTodayButton="true" data-showClose="true">
+                <input type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Wprowadź datę" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar" />
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date datetimepicker" data-keepOpen="false" data-format="YYYY-MM-DD HH:mm" data-lang="pl" data-showTodayButton="true" data-showClose="true">
+                <input type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" placeholder="Wprowadź datę" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar" />
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Tylko czas</h3>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date datetimepicker" data-format="HH:mm" data-lang="pl" data-showTodayButton="true" data-showClose="true">
+                <input type="text" class="form-control" value="@DateTime.Now.ToString("HH:mm")" placeholder="Wprowadź czas" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time" />
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4. Zlinkowanie dwóch kontrolek 'DateTimePicker' - utworzenie zakresu i blokada wyboru daty większej niż w drugiej kontrolce. -->
+<h3>Zakres dat</h3>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date datetimepicker" id="datetimepickerLinked1" data-keepOpen="false" data-format="YYYY-MM-DD HH:mm" data-lang="pl" data-showTodayButton="true" data-showClose="true">
+                <span class="input-group-addon">
+                    <span>Od</span>
+                </span>
+                <input type="text" class="form-control" value="@DateTime.Now.AddDays(-5).ToString("yyyy-MM-dd HH:mm")" placeholder="Wprowadź datę" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar" />
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group date datetimepicker" id="datetimepickerLinked2" data-keepOpen="false" data-format="YYYY-MM-DD HH:mm" data-lang="pl" data-showTodayButton="true" data-showClose="true">
+                <span class="input-group-addon">
+                    <span>Do</span>
+                </span>
+                <input type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" placeholder="Wprowadź datę" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar" />
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Alternatywa, kontrolka jedna pod drugą. -->
+@*<div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="input-group date datetimepicker" id="datetimepickerLinked1" data-keepOpen="false" data-format="YYYY-MM-DD HH:mm" data-lang="pl" data-showTodayButton="true" data-showClose="true">
+                    <span class="input-group-addon">
+                        <span>Od</span>
+                    </span>
+                    <input type="text" class="form-control" value="@DateTime.Now.AddDays(-5).ToString("yyyy-MM-dd HH:mm")" placeholder="Wprowadź datę" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar" />
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="input-group date datetimepicker" id="datetimepickerLinked2" data-keepOpen="false" data-format="YYYY-MM-DD HH:mm" data-lang="pl" data-showTodayButton="true" data-showClose="true">
+                    <span class="input-group-addon">
+                        <span>Do</span>
+                    </span>
+                    <input type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" placeholder="Wprowadź datę" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar" />
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@section scripts {
+    <script type="text/javascript">
+        // 2. Obsługa statyczna skryptem, szukanie po [class="input-group date" - '.input-group.date'].
+        // Koliduje z kontrolką czasu - zakomentuj.
+        //$('.input-group.date').datetimepicker({
+        $('#datetimepicker1').datetimepicker({
+            keepOpen: false,
+            calendarWeeks: false,
+            format: 'YYYY-MM-DD HH:mm',
+            locale: 'pl',
+            showTodayButton: true,
+            showClose: true
+        });
+
+        // 3. Automatyczna obsługa skryptem wszystkich kontrolek 'datetimepicker', szukanie po [class="datetimepicker" - jQuery('.datetimepicker')].
+        pickers();
+        function pickers() {
+            var container = jQuery('.datetimepicker');
+            if (container.length > 0) {
+                if (jQuery().datetimepicker) {
+                    container.each(function () {
+                        var at = jQuery(this);
+                        jQuery(this).datetimepicker({
+                            keepOpen: at.attr('data-keepOpen') == "false" ? false : true,
+                            calendarWeeks: at.attr('data-calendarWeeks') == "false" ? false : true,
+                            format: at.attr('data-format') || 'YYYY-MM-DD HH:mm',
+                            locale: at.attr('data-lang') || 'en',
+                            showTodayButton: at.attr('data-showTodayButton') == "false" ? false : true,
+                            showClose: at.attr('data-showClose') == "false" ? false : true
+                        });
+                    });
+                }
+            }
+        }
+
+        // 4. Zlinkowanie dwóch kontrolek 'DateTimePicker'.
+        $(function () {
+            $('#datetimepickerLinked1').datetimepicker();
+            $('#datetimepickerLinked2').datetimepicker({
+                useCurrent: false
+            });
+            $("#datetimepickerLinked1").on("dp.change", function (e) {
+                $('#datetimepickerLinked2').data("DateTimePicker").minDate(e.date);
+            });
+            $("#datetimepickerLinked2").on("dp.change", function (e) {
+                $('#datetimepickerLinked1').data("DateTimePicker").maxDate(e.date);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,37 @@
+﻿I. Nuget Bootstrap.v3.Datetimepicker.CSS
+   Paczka 'Bootstrap.v3.Datetimepicker.CSS' posiada wszystkie potrzebne pliki JS i CSS, które nie wymagają kompilacji,
+   więc instalujemy tę paczkę zamiast 'Bootstrap.v3.Datetimepicker'.
+
+II. Nuget Bootstrap.v3.Datetimepicker wymaga kompilacji plików LESS do pliku CSS.
+
+   ======================================================================
+   Proces kompilacji do pliku wynikowego: 'bootstrap-datetimepicker.css'.
+   ======================================================================
+
+   Pobieramy:
+   1. Z Nugeta - Bootstrap.v3.Datetimepicker
+      Plik 'bootstrap-datetimepicker-build.less' służy do kompilacji.
+
+	  Poprawiamy ścieżkę w pliku 'bootstrap-datetimepicker-build.less':
+	  @import "bootstrap/less/variables.less";
+	  na
+	  @import "bootstrap/variables.less";
+
+   2. Z Nugeta - Less.js
+   3. Instalujemy program Crunch 2 - kompilator plików LESS do CSS (pobieralnia https://getcrunch.co/)
+      Wskazujemy plik 'bootstrap-datetimepicker-build.less' i wykonujemy kompilację do pliku 'bootstrap-datetimepicker.css'.
+	  Drugą kompilacje robimy z kompresją do pliku 'bootstrap-datetimepicker.min.css'.
+
+
+   ======================================================================
+   Pliki LESS w przeglądarce.
+   ======================================================================
+
+   Pliki LESS są obsługiwane przez niektóre przeglądarki np. Firefox.
+   Uwaga! nie robić tego produkcyjnie gdyż biblioteka less.js jest duża i wpływa na czas ładowania strony.
+   W nagłówku wstawiamy poniższe linijki i wszystko działa, ale wolno! (kolejność linijek ma znaczenie!).
+
+   <head>
+      <link rel="stylesheet/less" type="text/css" href="~/Content/bootstrap-datetimepicker-build.less" />
+      <script src="~/Scripts/less-1.5.1.min.js" type="text/javascript"></script>
+   </head>

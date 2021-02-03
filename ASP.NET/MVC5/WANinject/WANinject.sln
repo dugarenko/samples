@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WANinject", "WANinject\WANinject.csproj", "{AECDAAE6-DF21-4964-B5E6-46D2148F511E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AECDAAE6-DF21-4964-B5E6-46D2148F511E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AECDAAE6-DF21-4964-B5E6-46D2148F511E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AECDAAE6-DF21-4964-B5E6-46D2148F511E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AECDAAE6-DF21-4964-B5E6-46D2148F511E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F61144E-BB15-4EA4-83C0-9B4D69619DA2}
+	EndGlobalSection
+EndGlobal
