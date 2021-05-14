@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullPosNumber", "PullPosNumber\PullPosNumber.csproj", "{346FE7D8-78F5-4117-AEFB-B2603D1CAC60}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{346FE7D8-78F5-4117-AEFB-B2603D1CAC60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{346FE7D8-78F5-4117-AEFB-B2603D1CAC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{346FE7D8-78F5-4117-AEFB-B2603D1CAC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{346FE7D8-78F5-4117-AEFB-B2603D1CAC60}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B637E81E-9459-49B3-ABBF-71643876E2B3}
+	EndGlobalSection
+EndGlobal
