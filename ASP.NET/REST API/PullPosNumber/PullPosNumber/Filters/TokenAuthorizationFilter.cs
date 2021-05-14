@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using PullPosNumber.Properties;
 using System;
 using System.Linq;
 
@@ -11,20 +12,10 @@ namespace PullPosNumber.Filters
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if (!context.HttpContext.Request.Headers.ContainsKey("Authorization"))
+            if (!context.HttpContext.Request.Headers.ContainsKey("Authorization") ||
+                context.HttpContext.Request.Headers.First(x => x.Key == "Authorization").Value != _token)
             {
-                context.ModelState.AddModelError("Unauthorized", "Authentication credentials were not provided.");
-            }
-            else if (context.HttpContext.Request.Headers.First(x => x.Key == "Authorization").Value != _token)
-            {
-                context.ModelState.AddModelError("Unauthorized", "Invalid token.");
-            }
-
-            var state = context.ModelState["Unauthorized"];
-            if (state != null)
-            {
-                
-                context.Result = new UnauthorizedObjectResult(new { result = "Unauthorized", message = state.Errors.FirstOrDefault()?.ErrorMessage });
+                context.Result = new UnauthorizedObjectResult(Resources.Error_401_Html);
             }
         }
     }
