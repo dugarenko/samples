@@ -197,9 +197,9 @@ namespace MSMove
     {
         internal WindowInfo(IntPtr handle)
         {
-            if (handle == IntPtr.Zero || NativeMethods.IsWindow(new HandleRef(null, handle)) == false)
+            if (handle == IntPtr.Zero || !NativeMethods.IsWindow(new HandleRef(null, handle)))
             {
-                throw new NullReferenceException();
+                return;
             }
             Handle = handle;
             Refresh();
@@ -558,8 +558,9 @@ namespace MSMove
 
     internal class Wrapper : IWrapper
     {
-        internal Wrapper(string className, string windowName, bool rollbackState)
+        internal Wrapper(IntPtr handle, string className, string windowName, bool rollbackState)
         {
+            Handle = handle;
             ClassName = className;
             WindowName = windowName;
             RollbackState = rollbackState;
@@ -584,9 +585,18 @@ namespace MSMove
 
         public bool Move()
         {
-            WindowExecutor we = new WindowExecutor(ClassName, WindowName);
+            WindowExecutor we = null;
+            if (Handle != IntPtr.Zero)
+            {
+                we = new WindowExecutor(Handle);
+            }
+            else
+            {
+                we = new WindowExecutor(ClassName, WindowName);
+            }
             if (we.Handle == IntPtr.Zero)
             {
+                Handle = IntPtr.Zero;
                 return false;
             }
             Debug.WriteLine(string.Format("ClassName:{0}   Caption:{1}   Rectangle:{2}", we.ClassName, we.Caption, we.Rectangle));
@@ -670,6 +680,12 @@ namespace MSMove
             }
             return null;
         }
+
+        /// <summary>
+        /// Uchwyt okna.
+        /// </summary>
+        public IntPtr Handle
+        { get; private set; }
 
         /// <summary>
         /// Nazwa klasy.

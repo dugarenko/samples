@@ -1,4 +1,6 @@
-﻿namespace MSMove.Common.Interfaces
+﻿using System;
+
+namespace MSMove.Common.Interfaces
 {
     public interface IWrapper
     {
@@ -10,6 +12,12 @@
         void Display(bool noSleepOrTurnOff);
 
         bool Move();
+
+        /// <summary>
+        /// Uchwyt okna.
+        /// </summary>
+        IntPtr Handle
+        { get; }
 
         /// <summary>
         /// Nazwa klasy.

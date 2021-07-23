@@ -39,12 +39,15 @@ namespace MSMove
             this.chkInfo = new System.Windows.Forms.CheckBox();
             this.tmrInfo = new System.Windows.Forms.Timer(this.components);
             this.tmrHide = new System.Windows.Forms.Timer(this.components);
+            this.chkHex = new System.Windows.Forms.CheckBox();
+            this.udHandle = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.udHandle)).BeginInit();
             this.SuspendLayout();
             // 
             // chkMove
             // 
             this.chkMove.AutoSize = true;
-            this.chkMove.Location = new System.Drawing.Point(12, 68);
+            this.chkMove.Location = new System.Drawing.Point(12, 96);
             this.chkMove.Name = "chkMove";
             this.chkMove.Size = new System.Drawing.Size(64, 21);
             this.chkMove.TabIndex = 1;
@@ -61,28 +64,26 @@ namespace MSMove
             // 
             this.txtClassName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtClassName.Location = new System.Drawing.Point(12, 12);
+            this.txtClassName.Location = new System.Drawing.Point(12, 40);
             this.txtClassName.MinimumSize = new System.Drawing.Size(358, 22);
             this.txtClassName.Name = "txtClassName";
             this.txtClassName.Size = new System.Drawing.Size(358, 22);
             this.txtClassName.TabIndex = 2;
-            this.txtClassName.Text = "Notepad";
             // 
             // txtWindowName
             // 
             this.txtWindowName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtWindowName.Location = new System.Drawing.Point(12, 40);
+            this.txtWindowName.Location = new System.Drawing.Point(12, 68);
             this.txtWindowName.MinimumSize = new System.Drawing.Size(358, 22);
             this.txtWindowName.Name = "txtWindowName";
             this.txtWindowName.Size = new System.Drawing.Size(358, 22);
             this.txtWindowName.TabIndex = 3;
-            this.txtWindowName.Text = "Bez tytułu — Notatnik";
             // 
             // btnTest
             // 
             this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTest.Location = new System.Drawing.Point(270, 68);
+            this.btnTest.Location = new System.Drawing.Point(270, 96);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(100, 35);
             this.btnTest.TabIndex = 4;
@@ -100,7 +101,7 @@ namespace MSMove
             // chkInfo
             // 
             this.chkInfo.AutoSize = true;
-            this.chkInfo.Location = new System.Drawing.Point(82, 68);
+            this.chkInfo.Location = new System.Drawing.Point(82, 96);
             this.chkInfo.Name = "chkInfo";
             this.chkInfo.Size = new System.Drawing.Size(53, 21);
             this.chkInfo.TabIndex = 5;
@@ -118,11 +119,41 @@ namespace MSMove
             this.tmrHide.Interval = 6000;
             this.tmrHide.Tick += new System.EventHandler(this.tmrHide_Tick);
             // 
+            // chkHex
+            // 
+            this.chkHex.AutoSize = true;
+            this.chkHex.Location = new System.Drawing.Point(13, 13);
+            this.chkHex.Name = "chkHex";
+            this.chkHex.Size = new System.Drawing.Size(54, 21);
+            this.chkHex.TabIndex = 6;
+            this.chkHex.Text = "Hex";
+            this.chkHex.UseVisualStyleBackColor = true;
+            this.chkHex.CheckedChanged += new System.EventHandler(this.chkHex_CheckedChanged);
+            // 
+            // udHandle
+            // 
+            this.udHandle.Location = new System.Drawing.Point(73, 12);
+            this.udHandle.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.udHandle.Minimum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            -2147483648});
+            this.udHandle.Name = "udHandle";
+            this.udHandle.Size = new System.Drawing.Size(297, 22);
+            this.udHandle.TabIndex = 7;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(382, 113);
+            this.ClientSize = new System.Drawing.Size(382, 144);
+            this.Controls.Add(this.udHandle);
+            this.Controls.Add(this.chkHex);
             this.Controls.Add(this.chkInfo);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.txtWindowName);
@@ -137,6 +168,7 @@ namespace MSMove
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.udHandle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,6 +184,8 @@ namespace MSMove
         private System.Windows.Forms.CheckBox chkInfo;
         private System.Windows.Forms.Timer tmrInfo;
         private System.Windows.Forms.Timer tmrHide;
+        private System.Windows.Forms.CheckBox chkHex;
+        private System.Windows.Forms.NumericUpDown udHandle;
     }
 }
 

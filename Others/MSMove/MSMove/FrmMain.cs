@@ -6,16 +6,27 @@ namespace MSMove
 {
     public partial class FrmMain : Form
     {
-        // Parametry.
-        private string _className = "Notepad";
-        private string _windowName = "Bez tytułu — Notatnik";
-        private bool _rollbackState = false;
-        private int _interval = 60000;
-
         public FrmMain()
         {
             InitializeComponent();
+
             //string encryptedWrapper = MSMove.Common.WrapperHelper.Encrypt(Resources.WrapperBase64String);
+
+            chkHex.Checked = Settings.Default.Hex;
+            txtClassName.Text = Settings.Default.ClassName;
+            txtWindowName.Text = Settings.Default.WindowName;
+        }
+
+        private IntPtr GetHandle()
+        {
+            IntPtr handle = IntPtr.Zero;
+            try
+            {
+                long hwnd = Convert.ToInt64(udHandle.Value);
+                handle = new IntPtr(hwnd);
+            }
+            catch { }
+            return handle;
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -23,7 +34,7 @@ namespace MSMove
             try
             {
                 Icon = Resources.app;
-                tmrMove.Interval = _interval;
+                tmrMove.Interval = Settings.Default.MoveInterval;
 
                 noti.Icon = Icon;
                 noti.ContextMenu = new ContextMenu();
@@ -80,7 +91,12 @@ namespace MSMove
                 noti.Icon = null;
                 noti.Dispose();
 
-                MSMove.Common.WrapperHelper.Display(false, _className, _windowName, _rollbackState);
+                MSMove.Common.WrapperHelper.Display(false, GetHandle(), txtClassName.Text, txtWindowName.Text, Settings.Default.RollbackState);
+
+                Settings.Default.Hex = chkHex.Checked;
+                Settings.Default.ClassName = txtClassName.Text;
+                Settings.Default.WindowName = txtWindowName.Text;
+                Settings.Default.Save();
             }
             catch (Exception ex)
             {
@@ -97,30 +113,39 @@ namespace MSMove
                 {
                     return;
                 }
-
-                chkInfo.Checked = false;
-                chkInfo.Enabled = false;
+                
                 tmrInfo.Enabled = false;
 
                 if (chk.Checked && txtClassName.Visible)
                 {
-                    _className = txtClassName.Text;
-                    _windowName = txtWindowName.Text;
+                    chkHex.Enabled = false;
+                    udHandle.Enabled = false;
+                    txtClassName.Enabled = false;
+                    txtWindowName.Enabled = false;
+                    chkInfo.Enabled = false;
+                    chkInfo.Checked = false;
 
                     tmrHide.Enabled = true;
-
-                    MSMove.Common.WrapperHelper.Display(true, _className, _windowName, _rollbackState);
+                    MSMove.Common.WrapperHelper.Display(true, GetHandle(), txtClassName.Text, txtWindowName.Text, Settings.Default.RollbackState);
                 }
                 else
                 {
+                    chkHex.Visible = true;
+                    udHandle.Visible = true;
                     txtClassName.Visible = true;
                     txtWindowName.Visible = true;
-                    chk.Checked = false;
+
+                    chkHex.Enabled = true;
+                    udHandle.Enabled = true;
+                    txtClassName.Enabled = true;
+                    txtWindowName.Enabled = true;
 
                     chkInfo.Checked = false;
                     chkInfo.Enabled = true;
 
-                    MSMove.Common.WrapperHelper.Display(false, _className, _windowName, _rollbackState);
+                    chk.Checked = false;
+
+                    MSMove.Common.WrapperHelper.Display(false, GetHandle(), txtClassName.Text, txtWindowName.Text, Settings.Default.RollbackState);
                 }
 
                 tmrMove.Enabled = chk.Checked;
@@ -135,12 +160,17 @@ namespace MSMove
         {
             try
             {
-                if (!MSMove.Common.WrapperHelper.Move(_className, _windowName, _rollbackState))
+                if (!MSMove.Common.WrapperHelper.Move(GetHandle(), txtClassName.Text, txtWindowName.Text, Settings.Default.RollbackState))
                 {
                     tmrMove.Enabled = false;
                     chkMove.Checked = false;
+
+                    chkHex.Visible = false;
+                    udHandle.Visible = false;
                     txtClassName.Visible = false;
                     txtWindowName.Visible = false;
+
+                    chkInfo.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -153,6 +183,8 @@ namespace MSMove
         {
             try
             {
+                chkHex.Visible = false;
+                udHandle.Visible = false;
                 txtClassName.Visible = false;
                 txtWindowName.Visible = false;
             }
@@ -176,6 +208,15 @@ namespace MSMove
                     return;
                 }
 
+                if (chk.Checked)
+                {
+                    chkMove.Enabled = false;
+                }
+                else
+                {
+                    chkMove.Enabled = true;
+                }
+
                 tmrInfo.Enabled = chk.Checked;
             }
             catch (Exception ex)
@@ -188,11 +229,12 @@ namespace MSMove
         {
             try
             {
-                var winInfo = MSMove.Common.WrapperHelper.GetWindowInfoFromPoint();
-                if (winInfo != null)
+                var wi = MSMove.Common.WrapperHelper.GetWindowInfoFromPoint();
+                if (wi != null)
                 {
-                    txtClassName.Text = winInfo.ClassName;
-                    txtWindowName.Text = winInfo.Caption;
+                    udHandle.Value = wi.Handle.ToInt64();
+                    txtClassName.Text = wi.ClassName;
+                    txtWindowName.Text = wi.Caption;
                 }
             }
             catch (Exception ex)
@@ -206,6 +248,24 @@ namespace MSMove
             try
             {
                 Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void chkHex_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var chk = sender as CheckBox;
+                if (chk == null)
+                {
+                    return;
+                }
+
+                udHandle.Hexadecimal = chk.Checked;
             }
             catch (Exception ex)
             {

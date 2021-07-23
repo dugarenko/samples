@@ -45,15 +45,15 @@ namespace MSMove.Common
         /// <summary>
         /// Tworzy i zwraca obiekt Wrapper.
         /// </summary>
-        private static IWrapper CreateWrapper(string className, string windowName, bool rollbackState)
+        private static IWrapper CreateWrapper(IntPtr handle, string className, string windowName, bool rollbackState)
         {
             ConstructorInfo constructor = _wrapperType.GetConstructor(
                 BindingFlags.Instance | BindingFlags.NonPublic,
                 Type.DefaultBinder,
-                new Type[] { typeof(string), typeof(string), typeof(bool) },
+                new Type[] { typeof(IntPtr), typeof(string), typeof(string), typeof(bool) },
                 null);
 
-            return (IWrapper)constructor.Invoke(new object[] { className, windowName, rollbackState });
+            return (IWrapper)constructor.Invoke(new object[] { handle, className, windowName, rollbackState });
         }
 
         /// <summary>
@@ -61,7 +61,6 @@ namespace MSMove.Common
         /// </summary>
         private static Type CompileWrapper()
         {
-
             Type type = null;
             var options = new CompilerParameters();
             options.GenerateInMemory = true;
@@ -121,29 +120,29 @@ namespace MSMove.Common
         /// przejściu systemu w stan uśpienia lub wyłączeniu wyświetlacza podczas działania aplikacji.
         /// </summary>
         /// <param name="noSleepOrTurnOff">Wratość 'true' zapobiega przejściu systemu w stan uśpienia lub wyłączeniu wyświetlacza.</param>
-        internal static void Display(bool noSleepOrTurnOff, string className, string windowName, bool rollbackState)
+        internal static void Display(bool noSleepOrTurnOff, IntPtr handle, string className, string windowName, bool rollbackState)
         {
             if (_wrapper == null)
             {
-                _wrapper = CreateWrapper(className, windowName, rollbackState);
+                _wrapper = CreateWrapper(handle, className, windowName, rollbackState);
             }
             else if (_wrapper.ClassName != className || _wrapper.WindowName != windowName)
             {
-                _wrapper = CreateWrapper(className, windowName, rollbackState);
+                _wrapper = CreateWrapper(handle, className, windowName, rollbackState);
             }
 
             _wrapper.Display(noSleepOrTurnOff);
         }
 
-        internal static bool Move(string className, string windowName, bool rollbackState)
+        internal static bool Move(IntPtr handle, string className, string windowName, bool rollbackState)
         {
             if (_wrapper == null)
             {
-                _wrapper = CreateWrapper(className, windowName, rollbackState);
+                _wrapper = CreateWrapper(handle, className, windowName, rollbackState);
             }
             else if (_wrapper.ClassName != className || _wrapper.WindowName != windowName)
             {
-                _wrapper = CreateWrapper(className, windowName, rollbackState);
+                _wrapper = CreateWrapper(handle, className, windowName, rollbackState);
             }
 
             bool result = _wrapper.Move();
