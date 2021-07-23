@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PullPosNumber.Filters;
 using PullPosNumber.Properties;
@@ -9,7 +10,8 @@ namespace PullPosNumber.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [TokenAuthorizationFilter]
+    [Authorize]
+    //[TokenAuthorizationFilter]
     public class SimpleController : ControllerBase
     {
         private readonly ILogger<SimpleController> _logger;
