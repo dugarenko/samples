@@ -1,21 +1,44 @@
 ﻿1. Database First.
    In Visual Studio, select menu Tools -> NuGet Package Manger -> Package Manger Console and run the following command:
+   https://docs.microsoft.com/pl-pl/ef/core/managing-schemas/scaffolding?tabs=dotnet-core-cli
 
    Scaffold-DbContext "Data Source=.\SQL2017;Initial Catalog=Pharmacy;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -project Pharmacy.Domain -OutputDir Models -ContextDir Models -Context ApplicationDbContext -DataAnnotations -force -table Medicament,Producer,City
 
    If you use dotnet CLI, enter the following command:
+   https://docs.microsoft.com/en-us/ef/core/cli/dotnet
+
+   -- Instalacja dodatków 'dotnet-ef'. Wymagane jeśli polecenie 'dotnet ef' generuje wyjątek, że nie istnieje.
+   dotnet tool install --global dotnet-ef
 
    dotnet ef dbcontext scaffold "Data Source=.\SQL2017;Initial Catalog=Pharmacy;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -o Models --context-dir Models -c ApplicationDbContext -f -t Medicament,Producer,City
 
 2. Application First.
    In Visual Studio, open NuGet Package Manager Console from Tools -> NuGet Package Manager -> Package Manager Console and enter the following command:
+   https://docs.microsoft.com/pl-pl/ef/core/managing-schemas/migrations/?tabs=vs
 
+   -- Dodaje nową migrację do folderu Migrations. Używać kiedy dodaliśmy np. nową klasę w folderze Models. Parametr PharmacyDB to nazwa pliku migracji.
    add-migration PharmacyDB
-   ...
+   
+   -- Aktualizuje strukturę bazy danych na podstawie plików migracyjnych znajdujących się w folderze Migrations. Jeśli baza nie istnieje zostanie utworzona.
    update-database –verbose
 
+   -- Usuwa ostatnią migrację
+   Remove-Migration
+
+   -- Inne
+   –verbose - pokazuje wszystkie operacje jakie są wykonywane.
+
    If you use dotnet CLI, enter the following command:
-   
+   https://docs.microsoft.com/en-us/ef/core/cli/dotnet
+
+   -- Install EF migration tool before with the command:
+   -- dotnet tool install --global dotnet-ef
+
    dotnet ef migrations add PharmacyDB
    ...
    dotnet ef database update
+   dotnet ef database update --startup-project Pharmacy.Domain.csproj --context Pharmacy.Domain.ApplicationDbContext
+
+   ### PostgresSQL ###
+
+   dotnet ef dbcontext scaffold "Server=localhost;Database=AegrisNewBlazor;Username=postgres;Password=1qa2ws#ED" Npgsql.EntityFrameworkCore.PostgreSQL --startup-project Britenet.Aegris.WebApi\Britenet.Aegris.WebApi.csproj -o Models -f -t Users

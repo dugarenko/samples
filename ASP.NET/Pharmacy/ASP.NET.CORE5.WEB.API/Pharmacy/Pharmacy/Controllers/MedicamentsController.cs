@@ -106,7 +106,7 @@ namespace Pharmacy.Controllers
 
         // DELETE: medicaments/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Medicament>> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var medicament = await _context.Medicaments.FindAsync(id);
             if (medicament == null)
