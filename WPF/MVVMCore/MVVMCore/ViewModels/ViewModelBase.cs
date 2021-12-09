@@ -173,29 +173,17 @@ namespace MVVMCore.ViewModels
         [NonSerialized()]
         private bool _isDisposing = false;
 
-#if DOC_LANG_EN
-        /// <summary>
-        /// Destructor based on which the Finalize () method will be generated.
-        /// </summary>
-#else
         /// <summary>
         /// Destruktor na podstawie którego zostanie wygenerowana metoda Finalize().
         /// </summary>
-#endif
         ~ViewModelBase()
         {
             Dispose(false);
         }
 
-#if DOC_LANG_EN
-        /// <summary>
-        /// Cleaning method. Releases the managed resources.
-        /// </summary>
-#else
         /// <summary>
         /// Metoda sprzątająca. Zwalnia zasoby zarządzane.
         /// </summary>
-#endif
         protected virtual void Cleaner()
         {
             _validationErrors.Clear();
@@ -226,15 +214,9 @@ namespace MVVMCore.ViewModels
             }
         }
 
-#if DOC_LANG_EN
-        /// <summary>
-        /// Release of resources occupied by the object and its effective destruction.
-        /// </summary>
-#else
         /// <summary>
         /// Zwolnienie zajmowanych zasobów przez obiekt i efektywne jego zniszczenie.
         /// </summary>
-#endif
         public void Dispose()
         {
             // Wywołanie utylizacji z poziomu kodu użytkownika.
@@ -248,17 +230,10 @@ namespace MVVMCore.ViewModels
             GC.SuppressFinalize(this);
         }
 
-#if DOC_LANG_EN
-        /// <summary>
-        /// Gets a value indicating whether the control has been disposed of.
-        /// </summary>
-        /// <returns>true if the control has been disposed of; otherwise, false.</returns>
-#else
         /// <summary>
         /// Pobiera wartość wskazującą, czy kontrolka została usunięta.
         /// </summary>
         /// <returns>true, jeśli kontrola została usunięta, w przeciwnym razie false.</returns>
-#endif
         public bool IsDisposed
         {
             get
@@ -271,17 +246,10 @@ namespace MVVMCore.ViewModels
             }
         }
 
-#if DOC_LANG_EN
-        /// <summary>
-        /// Gets a value indicating whether the control is in the process of being disposed.
-        /// </summary>
-        /// <returns>true if the control is being disposed; otherwise false.</returns>
-#else
         /// <summary>
         /// Pobiera wartość wskazującą, czy kontrolka jest w trakcie usuwania.
         /// </summary>
         /// <returns>true, jeśli kontrolka jest w trakcie usuwania, w przeciwnym razie false.</returns>
-#endif
         public bool IsDisposing
         {
             get
