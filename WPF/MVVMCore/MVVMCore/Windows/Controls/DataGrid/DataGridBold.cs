@@ -110,7 +110,7 @@ namespace MVVMCore.Windows.Controls
             string assemblyName = _thisType.Assembly.GetName().Name;
             Resources.MergedDictionaries.Add(new ResourceDictionary()
             {
-                Source = new Uri($"/{assemblyName};component/Styles/DataGridFreshStyle.xaml", UriKind.Relative)
+                Source = new Uri($"/{assemblyName};component/Styles/DataGridBoldStyle.xaml", UriKind.Relative)
             });
 
             Style = Resources["DataGridFreshStyle.Default"] as Style;
