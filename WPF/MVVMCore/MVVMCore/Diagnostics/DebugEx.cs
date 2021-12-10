@@ -3,12 +3,7 @@
     /// <summary>
     /// Informacje o debuggerze.
     /// </summary>
-#if (CONTROLS || SMO)
-    internal
-#else
-	public
-#endif
- static class DebugEx
+	public static class DebugEx
     {
         /// <summary>
         /// Określa czy program uruchomiony jest w trybie DEBUG.

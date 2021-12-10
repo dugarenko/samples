@@ -9,12 +9,7 @@ namespace MVVMCore
     /// Definicja wyjątku dla pustego parametru.
     /// </summary>
     [Serializable]
-#if (CONTROLS)
-    internal
-#else
-	public
-#endif
- class ArgumentEmptyException : ArgumentException
+	public class ArgumentEmptyException : ArgumentException
     {
         /// <summary>
         /// Konstruktor.
