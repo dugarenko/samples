@@ -4,9 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppTest"
+        xmlns:controls="clr-namespace:MVVMCore.Windows.Controls;assembly=MVVMCore"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=True}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <controls:DataGridBold x:Name="dataGridBold"
+                                ColumnHeaderHeight="30" RowHeaderWidth="20" RowHeight="25"
+                                HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                                VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+                                ItemsSource="{Binding CountryItemsSource}" SelectedItems="{Binding CountrySelectedItems}"
+                                IsReadOnly="True"/>
     </Grid>
 </Window>

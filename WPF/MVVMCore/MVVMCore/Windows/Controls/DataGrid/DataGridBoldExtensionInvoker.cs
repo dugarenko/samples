@@ -10,7 +10,7 @@ namespace MVVMCore.Windows.Controls
     public interface IDataGridBoldExtensionInvoker
     {
         /// <summary>
-        /// Reprezentuje metodę, która będzie obsługiwać zdarzenie, które usuwa zaznaczenie wszystkich komórek w DataGridFresh.
+        /// Reprezentuje metodę, która będzie obsługiwać zdarzenie, które usuwa zaznaczenie wszystkich komórek w DataGridBold.
         /// </summary>
         event EventHandler<EventArgs> UnselectAllCellsHandler;
         /// <summary></summary>
@@ -35,7 +35,7 @@ namespace MVVMCore.Windows.Controls
         event Func<ListSortDirection?> GetSortDirectionHandler;
 
         /// <summary>
-        /// Usuwa zaznaczenie wszystkich komórek w DataGridFresh.
+        /// Usuwa zaznaczenie wszystkich komórek w DataGridBold.
         /// </summary>
         void UnselectAllCells();
 
@@ -50,13 +50,13 @@ namespace MVVMCore.Windows.Controls
         double GetHorizontalOffset();
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych.
         /// </summary>
         /// <param name="item">Element danych do pokazania.</param>
         void ScrollIntoView(object item);
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="item">Element danych do pokazania.</param>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
@@ -64,7 +64,7 @@ namespace MVVMCore.Windows.Controls
         void ScrollIntoViewAndOffsets(object item, double verticalOffset, double horizontalOffset);
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="item">Element danych do pokazania.</param>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
@@ -72,7 +72,7 @@ namespace MVVMCore.Windows.Controls
         Task ScrollIntoViewAndOffsetsAsync(object item, double verticalOffset, double horizontalOffset);
 
         /// <summary>
-        /// Przewija zawartość w DataGridFresh do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija zawartość w DataGridBold do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
         /// <param name="horizontalOffset">Pozycja, do której przewija się treść w poziomie.</param>
@@ -104,7 +104,7 @@ namespace MVVMCore.Windows.Controls
     public class DataGridExtensionInvoker : IDataGridBoldExtensionInvoker
     {
         /// <summary>
-        /// Reprezentuje metodę, która będzie obsługiwać zdarzenie, które usuwa zaznaczenie wszystkich komórek w DataGridFresh.
+        /// Reprezentuje metodę, która będzie obsługiwać zdarzenie, które usuwa zaznaczenie wszystkich komórek w DataGridBold.
         /// </summary>
         public event EventHandler<EventArgs> UnselectAllCellsHandler;
         /// <summary></summary>
@@ -129,7 +129,7 @@ namespace MVVMCore.Windows.Controls
         public event Func<ListSortDirection?> GetSortDirectionHandler;
 
         /// <summary>
-        /// Usuwa zaznaczenie wszystkich komórek w DataGridFresh.
+        /// Usuwa zaznaczenie wszystkich komórek w DataGridBold.
         /// </summary>
         public void UnselectAllCells()
         {
@@ -153,7 +153,7 @@ namespace MVVMCore.Windows.Controls
         }
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych.
         /// </summary>
         /// <param name="item">Element danych do pokazania.</param>
         public void ScrollIntoView(object item)
@@ -162,7 +162,7 @@ namespace MVVMCore.Windows.Controls
         }
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="item">Element danych do pokazania.</param>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
@@ -173,7 +173,7 @@ namespace MVVMCore.Windows.Controls
         }
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="item">Element danych do pokazania.</param>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
@@ -184,7 +184,7 @@ namespace MVVMCore.Windows.Controls
         }
 
         /// <summary>
-        /// Przewija zawartość w DataGridFresh do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija zawartość w DataGridBold do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
         /// <param name="horizontalOffset">Pozycja, do której przewija się treść w poziomie.</param>

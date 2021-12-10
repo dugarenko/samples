@@ -21,7 +21,7 @@ using System.Windows.Input;
 namespace MVVMCore.Windows.Controls
 {
     /// <summary>
-    /// Kontrolka DataGridFresh.
+    /// Kontrolka DataGridBold.
     /// </summary>
     [ToolboxItem(true)]
     [DesignTimeVisible(true)]
@@ -36,7 +36,7 @@ namespace MVVMCore.Windows.Controls
             MethodInfoEx.DefaultFlags, System.Type.DefaultBinder, new Type[] { typeof(ICommand), typeof(object) }, null);
         //
         private Window _window = null;
-        private ScrollViewer _scrollViewerFresh = null;
+        private ScrollViewer _scrollViewer = null;
         private long _selectedItemsChanging = 0;
         //
         private static PropertyDescriptor _propertyDescriptorActualWidth = DependencyPropertyDescriptor.FromProperty(DataGridColumn.ActualWidthProperty, typeof(DataGridColumn));
@@ -73,35 +73,10 @@ namespace MVVMCore.Windows.Controls
 
         #endregion
 
-        #region DependencyProperty - IScrollViewerFresh.
-
-        /// <summary>
-        /// DependencyProperty for VScrollBarWidth property.
-        /// </summary>
-        public static readonly DependencyProperty VScrollBarWidthProperty = DependencyProperty.RegisterAttached("VScrollBarWidth",
-            typeof(double), _thisType, new FrameworkPropertyMetadata(SystemParameters.VerticalScrollBarWidth));
-
-        /// <summary>
-        /// DependencyProperty for HScrollBarHeight property.
-        /// </summary>
-        public static readonly DependencyProperty HScrollBarHeightProperty = DependencyProperty.RegisterAttached("HScrollBarHeight",
-            typeof(double), _thisType, new FrameworkPropertyMetadata(SystemParameters.HorizontalScrollBarHeight));
-
-        #endregion
-
         #region Constructors.
 
         /// <summary>
-        /// Statyczny konstruktor.
-        /// </summary>
-        static DataGridBold()
-        {
-            // Tylko dla kontrolek, które nie posiadają xaml-a.
-            DefaultStyleKeyProperty.OverrideMetadata(_thisType, new FrameworkPropertyMetadata(_thisType));
-        }
-
-        /// <summary>
-        /// Inicjuje nową instancję kontrolki DataGridFresh.
+        /// Inicjuje nową instancję kontrolki DataGridBold.
         /// </summary>
         public DataGridBold()
         {
@@ -113,11 +88,8 @@ namespace MVVMCore.Windows.Controls
                 Source = new Uri($"/{assemblyName};component/Styles/DataGridBoldStyle.xaml", UriKind.Relative)
             });
 
-            Style = Resources["DataGridFreshStyle.Default"] as Style;
-            ColumnHeaderStyle = Resources["DataGridColumnHeaderStyle.Default"] as Style;
-            RowHeaderStyle = Resources["DataGridRowHeaderStyle.Default"] as Style;
-            RowStyle = Resources["DataGridRowStyle.Default"] as Style;
-            CellStyle = Resources["DataGridCellStyle.Default"] as Style;
+            RowStyle = Resources["DataGridRowDefault"] as Style;
+            CellStyle = Resources["DataGridCellDefault"] as Style;
 
             // Wczytujemy oryginalną wartość 'base.SelectedItems' do 'SelectedItemsProperty'.
             SetCurrentValue(SelectedItemsProperty, base.SelectedItems);
@@ -142,6 +114,34 @@ namespace MVVMCore.Windows.Controls
             if (c.SelectionMode == DataGridSelectionMode.Extended)
             {
                 c.UpdateSelectedItems((System.Collections.IList)e.NewValue);
+            }
+        }
+
+        private static void OnVScrollBarWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var c = (DataGridBold)d;
+            if (c.IsDisposed)
+            {
+                return;
+            }
+
+            if (c._scrollViewer != null)
+            {
+                c._scrollViewer.Width = (double)e.NewValue;
+            }
+        }
+
+        private static void OnHScrollBarHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var c = (DataGridBold)d;
+            if (c.IsDisposed)
+            {
+                return;
+            }
+
+            if (c._scrollViewer != null)
+            {
+                c._scrollViewer.Height = (double)e.NewValue;
             }
         }
 
@@ -248,7 +248,7 @@ namespace MVVMCore.Windows.Controls
         }
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="sender">Dostarczony obiekt.</param>
         /// <param name="e">Dostarczone dane.</param>
@@ -554,7 +554,7 @@ namespace MVVMCore.Windows.Controls
                 return;
             }
 
-            _scrollViewerFresh = this.Descendants<ScrollViewer>().FirstOrDefault(x => x.Name == "DG_ScrollViewer");
+            _scrollViewer = this.Descendants<ScrollViewer>().FirstOrDefault(x => x.Name == "DG_ScrollViewer");
         }
 
         /// <summary>
@@ -578,7 +578,7 @@ namespace MVVMCore.Windows.Controls
         }
 
         /// <summary>
-        /// Przewija zawartość w DataGridFresh do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija zawartość w DataGridBold do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
         /// <param name="horizontalOffset">Pozycja, do której przewija się treść w poziomie.</param>
@@ -589,7 +589,7 @@ namespace MVVMCore.Windows.Controls
         }
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="item">Element danych do pokazania.</param>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
@@ -623,7 +623,7 @@ namespace MVVMCore.Windows.Controls
         }
 
         /// <summary>
-        /// Przewija DataGridFresh w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
+        /// Przewija DataGridBold w pionie, aby wyświetlić wiersz dla określonego elementu danych i do określonej pozycji przesunięcia w pionie i poziomie.
         /// </summary>
         /// <param name="item">Element danych do pokazania.</param>
         /// <param name="verticalOffset">Pozycja, do której przewija się treść w pionie.</param>
@@ -913,9 +913,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void LineDown()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.LineDown();
+                _scrollViewer.LineDown();
             }
         }
 
@@ -924,9 +924,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void LineLeft()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.LineLeft();
+                _scrollViewer.LineLeft();
             }
         }
 
@@ -935,9 +935,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void LineRight()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.LineRight();
+                _scrollViewer.LineRight();
             }
         }
 
@@ -946,9 +946,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void LineUp()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.LineUp();
+                _scrollViewer.LineUp();
             }
         }
 
@@ -957,9 +957,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void PageDown()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.PageDown();
+                _scrollViewer.PageDown();
             }
         }
 
@@ -968,9 +968,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void PageLeft()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.PageLeft();
+                _scrollViewer.PageLeft();
             }
         }
 
@@ -979,9 +979,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void PageRight()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.PageRight();
+                _scrollViewer.PageRight();
             }
         }
 
@@ -990,9 +990,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void PageUp()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.PageUp();
+                _scrollViewer.PageUp();
             }
         }
 
@@ -1001,9 +1001,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void ScrollToBottom()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.ScrollToBottom();
+                _scrollViewer.ScrollToBottom();
             }
         }
 
@@ -1012,9 +1012,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void ScrollToEnd()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.ScrollToEnd();
+                _scrollViewer.ScrollToEnd();
             }
         }
 
@@ -1023,9 +1023,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void ScrollToHome()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.ScrollToHome();
+                _scrollViewer.ScrollToHome();
             }
         }
 
@@ -1035,9 +1035,9 @@ namespace MVVMCore.Windows.Controls
         /// <param name="offset">The position that the content scrolls to.</param>
         public void ScrollToHorizontalOffset(double offset)
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.ScrollToHorizontalOffset(offset);
+                _scrollViewer.ScrollToHorizontalOffset(offset);
             }
         }
 
@@ -1046,9 +1046,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void ScrollToLeftEnd()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.ScrollToLeftEnd();
+                _scrollViewer.ScrollToLeftEnd();
             }
         }
 
@@ -1057,9 +1057,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void ScrollToRightEnd()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.ScrollToRightEnd();
+                _scrollViewer.ScrollToRightEnd();
             }
         }
 
@@ -1068,9 +1068,9 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public void ScrollToTop()
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.ScrollToTop();
+                _scrollViewer.ScrollToTop();
             }
         }
 
@@ -1080,9 +1080,9 @@ namespace MVVMCore.Windows.Controls
         /// <param name="offset">The position that the content scrolls to.</param>
         public void ScrollToVerticalOffset(double offset)
         {
-            if (_scrollViewerFresh != null)
+            if (_scrollViewer != null)
             {
-                _scrollViewerFresh.ScrollToVerticalOffset(offset);
+                _scrollViewer.ScrollToVerticalOffset(offset);
             }
         }
 
@@ -1177,26 +1177,6 @@ namespace MVVMCore.Windows.Controls
             }
         }
 
-        /// <summary>
-        /// Pobiera lub ustawia szerokość pionowego paska przewijania.
-        /// </summary>
-        [Category("DataGridFresh - ScrollBar")]
-        public double VScrollBarWidth
-        {
-            get { return (double)GetValue(VScrollBarWidthProperty); }
-            set { SetValue(VScrollBarWidthProperty, value); }
-        }
-
-        /// <summary>
-        /// Pobiera lub ustawia wysokość poziomego paska przewijania.
-        /// </summary>
-        [Category("DataGridFresh - ScrollBar")]
-        public double HScrollBarHeight
-        {
-            get { return (double)GetValue(HScrollBarHeightProperty); }
-            set { SetValue(HScrollBarHeightProperty, value); }
-        }
-
         #endregion
 
         #region IDataGridFreshScrollViewer Members.
@@ -1206,8 +1186,8 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public bool CanContentScroll
         {
-            get { return _scrollViewerFresh.CanContentScroll; }
-            set { _scrollViewerFresh.CanContentScroll = value; }
+            get { return _scrollViewer.CanContentScroll; }
+            set { _scrollViewer.CanContentScroll = value; }
         }
 
         /// <summary>
@@ -1215,7 +1195,7 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public Visibility ComputedHorizontalScrollBarVisibility
         {
-            get { return _scrollViewerFresh != null ? _scrollViewerFresh.ComputedHorizontalScrollBarVisibility : Visibility.Collapsed; }
+            get { return _scrollViewer != null ? _scrollViewer.ComputedHorizontalScrollBarVisibility : Visibility.Collapsed; }
         }
 
         /// <summary>
@@ -1223,7 +1203,7 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public Visibility ComputedVerticalScrollBarVisibility
         {
-            get { return _scrollViewerFresh != null ? _scrollViewerFresh.ComputedVerticalScrollBarVisibility : Visibility.Visible; }
+            get { return _scrollViewer != null ? _scrollViewer.ComputedVerticalScrollBarVisibility : Visibility.Visible; }
         }
 
         /// <summary>
@@ -1231,7 +1211,7 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public double HorizontalOffset
         {
-            get { return _scrollViewerFresh != null ? _scrollViewerFresh.HorizontalOffset : 0; }
+            get { return _scrollViewer != null ? _scrollViewer.HorizontalOffset : 0; }
         }
 
         /// <summary>
@@ -1239,7 +1219,7 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public double VerticalOffset
         {
-            get { return _scrollViewerFresh != null ? _scrollViewerFresh.VerticalOffset : 0; }
+            get { return _scrollViewer != null ? _scrollViewer.VerticalOffset : 0; }
         }
 
         /// <summary>
@@ -1247,7 +1227,7 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public double ContentVerticalOffset
         {
-            get { return _scrollViewerFresh != null ? _scrollViewerFresh.ContentVerticalOffset : 0; }
+            get { return _scrollViewer != null ? _scrollViewer.ContentVerticalOffset : 0; }
         }
 
         /// <summary>
@@ -1255,7 +1235,7 @@ namespace MVVMCore.Windows.Controls
         /// </summary>
         public double ContentHorizontalOffset
         {
-            get { return _scrollViewerFresh != null ? _scrollViewerFresh.ContentHorizontalOffset : 0; }
+            get { return _scrollViewer != null ? _scrollViewer.ContentHorizontalOffset : 0; }
         }
 
         #endregion
@@ -1303,9 +1283,9 @@ namespace MVVMCore.Windows.Controls
                 Loaded -= DataGrid_Loaded;
                 Columns.CollectionChanged -= Columns_CollectionChanged;
 
-                if (_scrollViewerFresh != null)
+                if (_scrollViewer != null)
                 {
-                    _scrollViewerFresh = null;
+                    _scrollViewer = null;
                 }
 
                 foreach (DataGridColumn column in Columns)

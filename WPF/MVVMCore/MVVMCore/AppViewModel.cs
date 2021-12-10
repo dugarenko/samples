@@ -23,7 +23,7 @@ namespace MVVMCore
     /// Reprezentuje bazową klasę modelu aplikacji.
     /// </summary>
     [Serializable]
-    internal class AppViewModel : ViewModelBase
+    public class AppViewModel : ViewModelBase
     {
         private bool? _isAdministrator = null;
         private bool _isBusy = false;
