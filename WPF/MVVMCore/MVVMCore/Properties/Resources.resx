@@ -120,6 +120,9 @@
   <data name="ArgumentEmptyException" xml:space="preserve">
     <value>Argument nie może przyjmować wartości pustej.</value>
   </data>
+  <data name="IloscElementow" xml:space="preserve">
+    <value>Ilość elementów:</value>
+  </data>
   <data name="Msg_Warning_DataConcurrency" xml:space="preserve">
     <value>W międzyczasie ustawienia zostały zmienione przez innego użytkownika. Czy chcesz kontynuować zapis i nadpisać dane wprowadzone przez innego użytkownika?
 

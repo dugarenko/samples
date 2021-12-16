@@ -70,6 +70,15 @@ namespace MVVMCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ilość elementów:.
+        /// </summary>
+        internal static string IloscElementow {
+            get {
+                return ResourceManager.GetString("IloscElementow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to W międzyczasie ustawienia zostały zmienione przez innego użytkownika. Czy chcesz kontynuować zapis i nadpisać dane wprowadzone przez innego użytkownika?
         ///
         ///Kliknij TAK i nadpisz dane lub kliknij NIE, wówczas dane na formularzu zostaną przeładowane..
