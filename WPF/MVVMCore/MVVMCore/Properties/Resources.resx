@@ -125,6 +125,9 @@
 
 Kliknij TAK i nadpisz dane lub kliknij NIE, wówczas dane na formularzu zostaną przeładowane.</value>
   </data>
+  <data name="ObjectNotHaveField" xml:space="preserve">
+    <value>Obiekt nie posiada pola: {0}.</value>
+  </data>
   <data name="ObjectNotHaveMethod" xml:space="preserve">
     <value>Obiekt nie posiada metody: {0}.</value>
   </data>

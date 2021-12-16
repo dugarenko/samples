@@ -62,6 +62,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Internal\BindUriHelper.cs" />
     <Compile Include="Internal\SecurityHelper.cs" />
+    <Compile Include="Reflection\FieldInfoEx.cs" />
     <Compile Include="Windows\ApplicationEx.cs" />
     <Compile Include="Windows\Controls\DataGrid\DataGridBoldClipboardHelper.cs" />
     <Compile Include="Windows\Controls\DataGrid\DataGridEx.cs" />
@@ -115,9 +116,11 @@
     <Compile Include="Windows\Controls\DataGrid\DataGridBold.cs" />
     <Compile Include="Windows\Controls\DataGrid\DataGridBoldRowClipboardEventArgsEx.cs" />
     <Compile Include="Windows\DependencyObjectEx.cs" />
+    <Compile Include="Windows\Forms\MapWin32Window.cs" />
     <Compile Include="Windows\FrameworkElementEx.cs" />
     <Compile Include="Windows\Input\ExecutedRoutedEventArgsEx.cs" />
     <Compile Include="Windows\SystemParametersEx.cs" />
+    <Compile Include="Windows\WindowEx.cs" />
     <Compile Include="Windows\WinFormsSecurity.cs" />
   </ItemGroup>
   <ItemGroup>

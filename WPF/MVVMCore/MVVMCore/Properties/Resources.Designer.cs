@@ -81,6 +81,15 @@ namespace MVVMCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Obiekt nie posiada pola: {0}..
+        /// </summary>
+        internal static string ObjectNotHaveField {
+            get {
+                return ResourceManager.GetString("ObjectNotHaveField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Obiekt nie posiada metody: {0}..
         /// </summary>
         internal static string ObjectNotHaveMethod {

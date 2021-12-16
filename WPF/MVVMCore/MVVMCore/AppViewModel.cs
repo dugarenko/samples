@@ -16,6 +16,8 @@ using System.Windows.Threading;
 using MVVMCore.Data.SqlClient;
 using MVVMCore.Text;
 using MVVMCore.Windows.Controls;
+using System.IO;
+using MVVMCore.Windows.Forms;
 
 namespace MVVMCore
 {
@@ -292,6 +294,187 @@ namespace MVVMCore
 
         #endregion
 
+        #region Public methods.
+
+        /// <summary>
+        /// Zwraca interfejs System.Windows.Forms.IWin32Window.
+        /// </summary>
+        /// <remarks>Metoda służy do pokazania okien OpenFileDialog, SaveFileDialog, które wymagają wskazania interfejsu System.Windows.Forms.IWin32Window w parametrze metody ShowDialog.</remarks>
+        public System.Windows.Forms.IWin32Window GetIWin32Window()
+        {
+            return new MapWin32Window(WindowInvoker);
+        }
+
+        /// <summary>
+        /// Pokazuje okno dialogowe 'Otwórz plik...'
+        /// </summary>
+        /// <param name="fileFilter">Filtr plików.</param>
+        /// <param name="filePath">Proponowana ścieżka do pliku.</param>
+        /// <returns>Pełna ścieżka do pliku, lub null.</returns>
+        public string OpenFile(string fileFilter, string filePath)
+        {
+            int filterIndex = 0;
+            return OpenFile(fileFilter, filePath, ref filterIndex);
+        }
+
+        /// <summary>
+        /// Pokazuje okno dialogowe 'Otwórz plik...'
+        /// </summary>
+        /// <param name="fileFilter">Filtr plików.</param>
+        /// <param name="filePath">Proponowana ścieżka do pliku.</param>
+        /// <param name="filterIndex">Indeks filtra w oknie dialogowym.</param>
+        /// <returns>Pełna ścieżka do pliku, lub null.</returns>
+        public string OpenFile(string fileFilter, string filePath, ref int filterIndex)
+        {
+            using (System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog())
+            {
+                try
+                {
+                    if (fileFilter != null)
+                    {
+                        ofd.Filter = fileFilter;
+
+                        if (filterIndex > -1)
+                        {
+                            ofd.FilterIndex = filterIndex;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        string directoryPath = filePath;
+                        string ext = Path.GetExtension(filePath);
+
+                        if (!string.IsNullOrEmpty(ext))
+                        {
+                            directoryPath = Path.GetDirectoryName(filePath);
+                        }
+
+                        if (Directory.Exists(directoryPath))
+                        {
+                            ofd.InitialDirectory = directoryPath;
+                        }
+
+                        if (!string.IsNullOrEmpty(ext))
+                        {
+                            ofd.FileName = Path.GetFileName(filePath);
+                        }
+                    }
+                }
+                catch
+                {
+                    ofd.InitialDirectory = "";
+                    ofd.FileName = "";
+                }
+
+                if (ofd.ShowDialog(GetIWin32Window()) == System.Windows.Forms.DialogResult.OK)
+                {
+                    filterIndex = ofd.FilterIndex;
+                    return ofd.FileName;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Pokazuje okno dialogowe 'Zapisz plik...'.
+        /// </summary>
+        /// <param name="fileFilter">Filtr plików.</param>
+        /// <param name="filePath">Proponowana ścieżka do pliku.</param>
+        /// <returns>Pełna ścieżka do pliku, lub null.</returns>
+        public string SaveAsFile(string fileFilter, string filePath)
+        {
+            int filterIndex = 0;
+            return SaveAsFile(fileFilter, filePath, ref filterIndex);
+        }
+
+        /// <summary>
+        /// Pokazuje okno dialogowe 'Zapisz plik...'.
+        /// </summary>
+        /// <param name="fileFilter">Filtr plików.</param>
+        /// <param name="filePath">Proponowana ścieżka do pliku.</param>
+        /// <param name="filterIndex">Indeks filtra w oknie dialogowym.</param>
+        /// <returns>Pełna ścieżka do pliku, lub null.</returns>
+        public string SaveAsFile(string fileFilter, string filePath, ref int filterIndex)
+        {
+            using (System.Windows.Forms.SaveFileDialog sfd = new System.Windows.Forms.SaveFileDialog())
+            {
+                try
+                {
+                    if (fileFilter != null)
+                    {
+                        sfd.Filter = fileFilter;
+
+                        if (filterIndex > -1)
+                        {
+                            sfd.FilterIndex = filterIndex;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        string directoryPath = filePath;
+                        string ext = Path.GetExtension(filePath);
+
+                        if (!string.IsNullOrEmpty(ext))
+                        {
+                            directoryPath = Path.GetDirectoryName(filePath);
+                        }
+
+                        if (Directory.Exists(directoryPath))
+                        {
+                            sfd.InitialDirectory = directoryPath;
+                        }
+
+                        if (!string.IsNullOrEmpty(ext))
+                        {
+                            sfd.FileName = Path.GetFileName(filePath);
+                        }
+                    }
+                }
+                catch
+                {
+                    sfd.InitialDirectory = "";
+                    sfd.FileName = "";
+                }
+
+                if (sfd.ShowDialog(GetIWin32Window()) == System.Windows.Forms.DialogResult.OK)
+                {
+                    filterIndex = sfd.FilterIndex;
+                    return sfd.FileName;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Pokazuje okno dialogowe 'Przeglądaj folder...'.
+        /// </summary>
+        /// <param name="folderPath">Proponowana ścieżka do folderu.</param>
+        /// <returns>Pełna ścieżka do folderu, lub null.</returns>
+        public string FolderBrowse(string folderPath)
+        {
+            using (System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(folderPath) && Directory.Exists(folderPath))
+                    {
+                        fbd.SelectedPath = folderPath;
+                    }
+                }
+                catch { }
+
+                if (fbd.ShowDialog(GetIWin32Window()) == System.Windows.Forms.DialogResult.OK)
+                {
+                    return fbd.SelectedPath;
+                }
+            }
+            return null;
+        }
+
+        #endregion
+
         #region Protected properties.
 
         /// <summary>
@@ -428,8 +611,8 @@ namespace MVVMCore
         {
             try
             {
-                // Sprawdzamy 'WindowInvoker', metoda 'Initialized' mogła już wczytać wartość 'WindowInvoker';
-                if (WindowInvoker == null)
+                    // Sprawdzamy 'WindowInvoker', metoda 'Initialized' mogła już wczytać wartość 'WindowInvoker';
+                    if (WindowInvoker == null)
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -502,8 +685,8 @@ namespace MVVMCore
         {
             try
             {
-                // Sprawdzamy 'WindowInvoker', metoda 'InitializedUserControl' mogła już wczytać wartość 'WindowInvoker';
-                if (WindowInvoker == null)
+                    // Sprawdzamy 'WindowInvoker', metoda 'InitializedUserControl' mogła już wczytać wartość 'WindowInvoker';
+                    if (WindowInvoker == null)
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -561,8 +744,8 @@ namespace MVVMCore
         {
             try
             {
-                // Sprawdzamy 'WindowInvoker', metoda 'Initialized' mogła już wczytać wartość 'WindowInvoker';
-                if (WindowInvoker == null)
+                    // Sprawdzamy 'WindowInvoker', metoda 'Initialized' mogła już wczytać wartość 'WindowInvoker';
+                    if (WindowInvoker == null)
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -619,8 +802,8 @@ namespace MVVMCore
         {
             try
             {
-                // Sprawdzamy 'WindowInvoker', metoda 'InitializedUserControl' mogła już wczytać wartość 'WindowInvoker';
-                if (WindowInvoker == null)
+                    // Sprawdzamy 'WindowInvoker', metoda 'InitializedUserControl' mogła już wczytać wartość 'WindowInvoker';
+                    if (WindowInvoker == null)
                 {
                     Dispatcher.Invoke(() =>
                     {

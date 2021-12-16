@@ -185,33 +185,7 @@ namespace MVVMCore.Win32
 
         #endregion
 
-        public static class CommonHandles
-        {
-            public readonly static int Accelerator;
-            public readonly static int Cursor;
-            public readonly static int EMF;
-            public readonly static int Find;
-            public readonly static int GDI;
-            public readonly static int HDC;
-            public readonly static int Icon;
-            public readonly static int Kernel;
-            public readonly static int Menu;
-            public readonly static int Window;
-
-            static CommonHandles()
-            {
-                Accelerator = Internal_.HandleCollector.RegisterType("Accelerator", 80, 50);
-                Cursor = Internal_.HandleCollector.RegisterType("Cursor", 20, 500);
-                EMF = Internal_.HandleCollector.RegisterType("EnhancedMetaFile", 20, 500);
-                Find = Internal_.HandleCollector.RegisterType("Find", 0, 1000);
-                GDI = Internal_.HandleCollector.RegisterType("GDI", 50, 500);
-                HDC = Internal_.HandleCollector.RegisterType("HDC", 100, 2);
-                Icon = Internal_.HandleCollector.RegisterType("Icon", 20, 500);
-                Kernel = Internal_.HandleCollector.RegisterType("Kernel", 0, 1000);
-                Menu = Internal_.HandleCollector.RegisterType("Menu", 30, 1000);
-                Window = Internal_.HandleCollector.RegisterType("Window", 5, 1000);
-            }
-        }
+        #region Interfaces.
 
         [ComImport, Guid("79eac9ee-baf9-11ce-8c82-00aa004ba90b"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IInternetSecurityMgrSite
@@ -262,6 +236,42 @@ namespace MVVMCore.Win32
             unsafe void GetZoneMappings( /* [in] */ int dwZone, /* [out] */ /*IEnumString*/ void** ppenumString, /* [in] */ int dwFlags);
         }
 
+        #endregion
+
+        #region Classes.
+
+        public static class CommonHandles
+        {
+            public readonly static int Accelerator;
+            public readonly static int Cursor;
+            public readonly static int EMF;
+            public readonly static int Find;
+            public readonly static int GDI;
+            public readonly static int HDC;
+            public readonly static int Icon;
+            public readonly static int Kernel;
+            public readonly static int Menu;
+            public readonly static int Window;
+
+            static CommonHandles()
+            {
+                Accelerator = Internal_.HandleCollector.RegisterType("Accelerator", 80, 50);
+                Cursor = Internal_.HandleCollector.RegisterType("Cursor", 20, 500);
+                EMF = Internal_.HandleCollector.RegisterType("EnhancedMetaFile", 20, 500);
+                Find = Internal_.HandleCollector.RegisterType("Find", 0, 1000);
+                GDI = Internal_.HandleCollector.RegisterType("GDI", 50, 500);
+                HDC = Internal_.HandleCollector.RegisterType("HDC", 100, 2);
+                Icon = Internal_.HandleCollector.RegisterType("Icon", 20, 500);
+                Kernel = Internal_.HandleCollector.RegisterType("Kernel", 0, 1000);
+                Menu = Internal_.HandleCollector.RegisterType("Menu", 30, 1000);
+                Window = Internal_.HandleCollector.RegisterType("Window", 5, 1000);
+            }
+        }
+
+        #endregion
+
+        #region APIs.
+
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
@@ -309,6 +319,17 @@ namespace MVVMCore.Win32
             HandleRef hModule,
             StringBuilder buffer,
             int length);
+
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr GetActiveWindow();
+
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        public static extern bool IsWindow(
+            HandleRef hWnd);
+
+        #endregion
+
+        #region Methods.
 
         ///<SecurityNote>
         /// Critical as this code performs an elevation. The call to handle collector is
@@ -360,5 +381,7 @@ namespace MVVMCore.Win32
             buffer.Length = length;
             return buffer;
         }
+
+        #endregion
     }
 }
