@@ -163,10 +163,6 @@ namespace MVVMCore.Reflection
             {
                 throw new ArgumentException(string.Format(Resources.ObjectNotHaveField, fieldName), "fieldName");
             }
-
-#if UNLOCK_REFLECTION
-            fi.TryUnlock();
-#endif
             return (TValue)fi.GetValue(obj);
         }
 
