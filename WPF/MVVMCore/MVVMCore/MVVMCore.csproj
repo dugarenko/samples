@@ -59,6 +59,7 @@
     <Compile Include="AppViewModel.cs" />
     <Compile Include="ArgumentEmptyException.cs" />
     <Compile Include="Behaviors\EventBehavior.cs" />
+    <Compile Include="ComponentModel\NotifyPropertyChanged.cs" />
     <Compile Include="Converters\ItemsCountToTextConverter.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Internal\BindUriHelper.cs" />
