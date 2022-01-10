@@ -1,4 +1,0 @@
-﻿1. Wygenerowanie kodu YAML.
-   Kod generujemy programem NSwagStudio. Uruchamiamy program klikamy w zakładkę [OpenAPI/Swagger Specification], wklejamy poniższą ścieżkę:
-   https://localhost:44340/swagger/v1/swagger.json
-   do pola [Specification URL] i klikamy w przycisk [Create local Copy]. W oknie wynikowym pojawi się nam wygenerowany kod YAML (OpenAPI).

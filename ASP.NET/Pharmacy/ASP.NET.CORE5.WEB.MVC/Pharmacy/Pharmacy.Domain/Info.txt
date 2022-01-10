@@ -22,6 +22,20 @@
    -- Aktualizuje strukturę bazy danych na podstawie plików migracyjnych znajdujących się w folderze Migrations. Jeśli baza nie istnieje zostanie utworzona.
    update-database –verbose
 
+   -- Aktualizuje strukturę bazy danych na podstawie plików migracyjnych znajdujących się w folderze Migrations. Jeśli baza nie istnieje zostanie utworzona.
+   -- Aktualizacja wykorzystuje plik konfiguracyjny o nazwie ConfigurationPharmacy.cs znajdujący się w folderze Migrations.
+   update-database -ConfigurationTypeName ConfigurationPharmacy -project Pharmacy.Domain –verbose
+   -- Konfiguracja aktualizacji.
+   public class ConfigurationPharmacy : DbMigrationsConfiguration<DBContext>
+   {
+      public ConfigurationPharmacy()
+      {
+         CommandTimeout = 36000;
+         AutomaticMigrationsEnabled = true; // Można wyłączyć migrację, w konsoli zgłoszony zostanie komunikat.
+         MigrationsDirectory = @"Migrations"
+      }
+   }
+
    -- Usuwa ostatnią migrację
    Remove-Migration
 

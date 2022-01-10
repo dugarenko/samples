@@ -1,19 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Shop.Infrastructure.Identity;
+using Shop.Infrastructure.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAuthorizationKey.Areas.Api.Data;
-using WebAuthorizationKey.Areas.Api.Models;
-using WebAuthorizationKey.Areas.Attributes;
 
 namespace WebAuthorizationKey.Areas.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [Produces("application/json")]
     [ApiController]
-    [AuthorizationKey]
     public class KrajController : ControllerBase
     {
         private readonly ILogger<KrajController> _logger;
@@ -43,7 +41,7 @@ namespace WebAuthorizationKey.Areas.Api.Controllers
             {
                 offset = 0;
             }
-            return await _dbContext.Krajs.Skip(offset).Take(limit).ToListAsync();
+            return await _dbContext.Kraje.Skip(offset).Take(limit).ToListAsync();
         }
 
         // GET: api/<KrajController>/5
@@ -56,7 +54,7 @@ namespace WebAuthorizationKey.Areas.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Kraj>> Get(int id)
         {
-            var kraj = await _dbContext.Krajs.FindAsync(id);
+            var kraj = await _dbContext.Kraje.FindAsync(id);
             if (kraj == null)
             {
                 return NotFound();
@@ -70,16 +68,18 @@ namespace WebAuthorizationKey.Areas.Api.Controllers
         /// </summary>
         /// <param name="value">Dane do utworzenia nowego elementu.</param>
         /// <response code="201">Jeśli zwrócony zostanie nowoutworzony element.</response>
-        /// <response code="400">Jeśli właściwość 'Nazwa' przyjmuje wartość null lub pustą.</response>
+        /// <response code="400">Jeśli jedna z wymaganych wartości przyjmuje wartość null lub pustą.</response>
         [HttpPost(Name = "Create")]
         public async Task<ActionResult<Kraj>> Post([FromBody] Kraj value)
         {
-            if (string.IsNullOrEmpty(value.Nazwa))
+            if (string.IsNullOrEmpty(value.NazwaPolska) || string.IsNullOrEmpty(value.NazwaAngielska) ||
+                string.IsNullOrEmpty(value.KodKrajuISO2) || string.IsNullOrEmpty(value.KodKrajuISO3) ||
+                string.IsNullOrEmpty(value.KodWalutyISO))
             {
                 return BadRequest();
             }
 
-            _dbContext.Krajs.Add(value);
+            _dbContext.Kraje.Add(value);
             await _dbContext.SaveChangesAsync();
             return CreatedAtAction("Get", new { id = value.Id, value });
         }
@@ -91,25 +91,30 @@ namespace WebAuthorizationKey.Areas.Api.Controllers
         /// <param name="id">Identyfikator elementu do aktualizacji.</param>
         /// <param name="value">Dane elementu do aktualizacji.</param>
         /// <response code="204">Jeśli aktualizacja podanego elementu wykonała się poprawnie.</response>
-        /// <response code="400">Jeśli właściwość 'Nazwa' przyjmuje wartość null lub pustą.</response>
+        /// <response code="400">Jeśli jedna z wymaganych wartości przyjmuje wartość null lub pustą.</response>
         /// <response code="404">Jeśli element o wskazanym identyfikatorze nie został znaleziony.</response>
         [HttpPut("{id}", Name = "Update")]
         public async Task<IActionResult> Put(int id, [FromBody] Kraj value)
         {
-            if (string.IsNullOrEmpty(value.Nazwa))
+            if (string.IsNullOrEmpty(value.NazwaPolska) || string.IsNullOrEmpty(value.NazwaAngielska) ||
+                string.IsNullOrEmpty(value.KodKrajuISO2) || string.IsNullOrEmpty(value.KodKrajuISO3) ||
+                string.IsNullOrEmpty(value.KodWalutyISO))
             {
                 return BadRequest();
             }
 
-            var kraj = await _dbContext.Krajs.FindAsync(id);
+            var kraj = await _dbContext.Kraje.FindAsync(id);
             if (kraj == null)
             {
                 return NotFound();
             }
 
-            kraj.Nazwa = value.Nazwa;
-            kraj.ISO2 = value.ISO2;
-            kraj.ISO3 = value.ISO3;
+            kraj.NazwaPolska = value.NazwaPolska;
+            kraj.NazwaAngielska = value.NazwaAngielska;
+            kraj.KodKrajuISO2 = value.KodKrajuISO2;
+            kraj.KodKrajuISO3 = value.KodKrajuISO3;
+            kraj.KodWalutyISO = value.KodWalutyISO;
+            kraj.UE = value.UE;
 
             await _dbContext.SaveChangesAsync();
             return NoContent();
@@ -131,13 +136,13 @@ namespace WebAuthorizationKey.Areas.Api.Controllers
                 return BadRequest();
             }
 
-            var kraj = await _dbContext.Krajs.FindAsync(id);
+            var kraj = await _dbContext.Kraje.FindAsync(id);
             if (kraj == null)
             {
                 return NotFound();
             }
 
-            _dbContext.Krajs.Remove(kraj);
+            _dbContext.Kraje.Remove(kraj);
             await _dbContext.SaveChangesAsync();
             return Ok();
         }
