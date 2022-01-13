@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shop.Infrastructure;
-using Shop.Infrastructure.Models;
+using Shop.ApplicationCore.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

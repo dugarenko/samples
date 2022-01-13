@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
-namespace Shop.Infrastructure.Models
+namespace Shop.ApplicationCore.Models
 {
     [Table("Kraj")]
     [Index(nameof(KodKrajuISO2), Name = "UIX_Kraj__KodKrajuISO2", IsUnique = true)]

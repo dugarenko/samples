@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Shop.Infrastructure;
-using Shop.Infrastructure.Models.Identity;
+using Shop.ApplicationCore.Models.Identity;
 using System.Text.Json.Serialization;
 
 namespace Shop.Api

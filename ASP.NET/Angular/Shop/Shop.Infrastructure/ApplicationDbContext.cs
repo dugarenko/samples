@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Shop.Infrastructure.Models;
-using Shop.Infrastructure.Models.Identity;
+using Shop.ApplicationCore.Models;
+using Shop.ApplicationCore.Models.Identity;
 
 #nullable disable
 
