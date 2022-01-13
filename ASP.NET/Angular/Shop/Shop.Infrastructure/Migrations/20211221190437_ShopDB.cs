@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Shop.Infrastructure.Identity.Migrations
+namespace Shop.Infrastructure.Migrations
 {
     public partial class ShopDB : Migration
     {

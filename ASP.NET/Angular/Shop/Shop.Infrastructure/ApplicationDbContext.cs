@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Shop.Infrastructure.Models;
+using Shop.Infrastructure.Models.Identity;
 
 #nullable disable
 
-namespace Shop.Infrastructure.Identity
+namespace Shop.Infrastructure
 {
     public partial class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {

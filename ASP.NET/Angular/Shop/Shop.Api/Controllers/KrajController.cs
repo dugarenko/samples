@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Shop.Infrastructure.Identity;
+using Shop.Infrastructure;
 using Shop.Infrastructure.Models;
 using System.Collections.Generic;
 using System.Linq;
