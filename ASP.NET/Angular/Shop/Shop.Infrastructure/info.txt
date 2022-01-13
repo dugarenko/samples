@@ -10,7 +10,7 @@ dotnet tool install --global dotnet-ef
 
 -- Polecenie tworzy modele klas na podstawie tabel baz danych.
 https://docs.microsoft.com/pl-pl/ef/core/cli/dotnet#dotnet-ef-dbcontext-scaffold
-dotnet ef dbcontext scaffold "Data Source=.\SQL2017;Initial Catalog=Shop;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer --project Shop.Infrastructure -o Models -c ApplicationDbContext --context-dir Identity --use-database-names --no-onconfiguring -f -t Kraj
+dotnet ef dbcontext scaffold "Data Source=.\SQL2017;Initial Catalog=Shop;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer --project Shop.ApplicationCore --output-dir Models --context ApplicationDbContext --context-dir "." --use-database-names --no-onconfiguring -f -t Kraj
 
 2. Application First.
 
