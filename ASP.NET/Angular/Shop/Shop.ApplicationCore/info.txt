@@ -14,7 +14,13 @@ dotnet ef dbcontext scaffold "Data Source=.\SQL2017;Initial Catalog=Shop;Integra
 
 2. Application First.
 
--- Dodaje nową migrację (plik) do folderu Migrations. Używać kiedy utworzona została nowa klasa w folderze Models. Parametr ShopDB to nazwa pliku jaki zostanie wygenerowany podczas migracji i dodany do folderu Migrations.
+Uwaga! w tej architekturze gdzie migracja i modele są w osobnych projektach należy przed dodaniem migracji 'add-migration'
+dodać ręcznie w klasie 'Shop.Infrastructure.ApplicationDbContext' deklaracje odwołań do nowych encji np:
+public virtual DbSet<Kraj> Kraje { get; set; }
+aby w klasie 'Shop.Infrastructure.ApplicationDbContextModelSnapshot' generator utworzył struktury dla tych modeli.
+
+-- Dodaje nową migrację (plik) do folderu Migrations. Używać kiedy utworzona została nowa klasa w folderze Models.
+Parametr ShopDB to nazwa pliku jaki zostanie wygenerowany podczas migracji i dodany do folderu Migrations.
 https://docs.microsoft.com/pl-pl/ef/core/cli/powershell#add-migration
 add-migration ShopDB
 
