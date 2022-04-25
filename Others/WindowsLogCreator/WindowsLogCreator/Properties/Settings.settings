@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SkayTek.WindowsLogCreator.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CboSourceNamesText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Account Management</Value>
+    </Setting>
+    <Setting Name="CboSourceText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Account Management</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
