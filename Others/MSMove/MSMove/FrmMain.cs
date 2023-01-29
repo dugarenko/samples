@@ -1,5 +1,6 @@
 ﻿using MSMove.Properties;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace MSMove
@@ -10,11 +11,16 @@ namespace MSMove
         {
             InitializeComponent();
 
+            // Szyfrujemy tą klasę.
+            // Ustaw właściwość klasy Wrapper 'Build Action = None', wówczas klasa będzie pobierana z zasobów i kompilowana w locie.
             //string encryptedWrapper = MSMove.Common.WrapperHelper.Encrypt(Resources.WrapperBase64String);
+            //Debug.WriteLine(encryptedWrapper);
+            //string sourceCode = MSMove.Common.WrapperHelper.Decrypt(Resources.WrapperBase64String);
+            //Debug.WriteLine(sourceCode);
 
             chkHex.Checked = Settings.Default.Hex;
             txtClassName.Text = Settings.Default.ClassName;
-            txtWindowName.Text = Settings.Default.WindowName;
+            cboWindowName.Text = Settings.Default.WindowName;
         }
 
         private IntPtr GetHandle()
@@ -91,11 +97,11 @@ namespace MSMove
                 noti.Icon = null;
                 noti.Dispose();
 
-                MSMove.Common.WrapperHelper.Display(false, GetHandle(), txtClassName.Text, txtWindowName.Text, Settings.Default.RollbackState);
+                MSMove.Common.WrapperHelper.Display(false, GetHandle(), txtClassName.Text, cboWindowName.Text, Settings.Default.RollbackState);
 
                 Settings.Default.Hex = chkHex.Checked;
                 Settings.Default.ClassName = txtClassName.Text;
-                Settings.Default.WindowName = txtWindowName.Text;
+                Settings.Default.WindowName = cboWindowName.Text;
                 Settings.Default.Save();
             }
             catch (Exception ex)
@@ -121,31 +127,35 @@ namespace MSMove
                     chkHex.Enabled = false;
                     udHandle.Enabled = false;
                     txtClassName.Enabled = false;
-                    txtWindowName.Enabled = false;
+                    cboWindowName.Enabled = false;
                     chkInfo.Enabled = false;
                     chkInfo.Checked = false;
 
                     tmrHide.Enabled = true;
-                    MSMove.Common.WrapperHelper.Display(true, GetHandle(), txtClassName.Text, txtWindowName.Text, Settings.Default.RollbackState);
+                    MSMove.Common.WrapperHelper.Display(true, GetHandle(), txtClassName.Text, cboWindowName.Text, Settings.Default.RollbackState);
                 }
                 else
                 {
+                    lblHandle.Visible = true;
+                    lblClassName.Visible = true;
+                    lblWindowName.Visible= true;
+
                     chkHex.Visible = true;
                     udHandle.Visible = true;
                     txtClassName.Visible = true;
-                    txtWindowName.Visible = true;
+                    cboWindowName.Visible = true;
 
                     chkHex.Enabled = true;
                     udHandle.Enabled = true;
                     txtClassName.Enabled = true;
-                    txtWindowName.Enabled = true;
+                    cboWindowName.Enabled = true;
 
                     chkInfo.Checked = false;
                     chkInfo.Enabled = true;
 
                     chk.Checked = false;
 
-                    MSMove.Common.WrapperHelper.Display(false, GetHandle(), txtClassName.Text, txtWindowName.Text, Settings.Default.RollbackState);
+                    MSMove.Common.WrapperHelper.Display(false, GetHandle(), txtClassName.Text, cboWindowName.Text, Settings.Default.RollbackState);
                 }
 
                 tmrMove.Enabled = chk.Checked;
@@ -160,15 +170,19 @@ namespace MSMove
         {
             try
             {
-                if (!MSMove.Common.WrapperHelper.Move(GetHandle(), txtClassName.Text, txtWindowName.Text, Settings.Default.RollbackState))
+                if (!MSMove.Common.WrapperHelper.Move(GetHandle(), txtClassName.Text, cboWindowName.Text, Settings.Default.RollbackState))
                 {
                     tmrMove.Enabled = false;
                     chkMove.Checked = false;
 
+                    lblHandle.Visible = false;
+                    lblClassName.Visible = false;
+                    lblWindowName.Visible = false;
+
                     chkHex.Visible = false;
                     udHandle.Visible = false;
                     txtClassName.Visible = false;
-                    txtWindowName.Visible = false;
+                    cboWindowName.Visible = false;
 
                     chkInfo.Enabled = false;
                 }
@@ -183,10 +197,14 @@ namespace MSMove
         {
             try
             {
+                lblHandle.Visible = false;
+                lblClassName.Visible = false;
+                lblWindowName.Visible = false;
+
                 chkHex.Visible = false;
                 udHandle.Visible = false;
                 txtClassName.Visible = false;
-                txtWindowName.Visible = false;
+                cboWindowName.Visible = false;
             }
             catch (Exception ex)
             {
@@ -234,7 +252,7 @@ namespace MSMove
                 {
                     udHandle.Value = wi.Handle.ToInt64();
                     txtClassName.Text = wi.ClassName;
-                    txtWindowName.Text = wi.Caption;
+                    cboWindowName.Text = wi.Caption;
                 }
             }
             catch (Exception ex)
@@ -243,7 +261,7 @@ namespace MSMove
             }
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private void btnHide_Click(object sender, EventArgs e)
         {
             try
             {

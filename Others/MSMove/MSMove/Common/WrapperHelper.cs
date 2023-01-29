@@ -27,7 +27,7 @@ namespace MSMove.Common
 
         static WrapperHelper()
         {
-            // Jeśli klasa Wrapper ma ustawioną właściwość 'Build Action = Compile' to typ zostaie zwrócony.
+            // Jeśli klasa Wrapper ma ustawioną właściwość 'Build Action = Compile' to typ zostanie zwrócony.
             // Oznacza to, że klasa jest w kompilowana w aplikację, w przeciwnym razie klasę trzeba skompilować
             // w locie, ponieważ znajduje się w zasobach.
             _wrapperType = _assembly.DefinedTypes.FirstOrDefault(x => x.FullName == _typeWrapperName);

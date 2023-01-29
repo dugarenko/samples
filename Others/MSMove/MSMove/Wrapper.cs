@@ -1,7 +1,6 @@
 ﻿using MSMove.Common.Interfaces;
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -49,6 +48,9 @@ namespace MSMove
 
         internal const int WS_MAXIMIZE = 0x01000000;
         internal const int WS_MINIMIZE = 0x20000000;
+
+        internal const int GW_HWNDNEXT = 2;
+        internal const int GW_CHILD = 5;
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct POINT
@@ -126,14 +128,17 @@ namespace MSMove
         internal static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData, UIntPtr dwExtraInfo);
         [DllImport("user32.dll")]
         internal static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData, int dwExtraInfo);
-        [DllImport("User32", ExactSpelling = true, CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
         internal static extern bool SetCursorPos(int x, int y);
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetCursorPos(out POINT lpPoint);
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        internal static extern IntPtr GetDesktopWindow();
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        internal static extern IntPtr GetWindow(HandleRef hWnd, int uCmd);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern IntPtr FindWindow(string className, string windowName);
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [DllImport("user32.dll", EntryPoint = "WindowFromPoint", ExactSpelling = true, CharSet = CharSet.Auto)]
         private static extern IntPtr _WindowFromPoint(POINTSTRUCT pt);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -210,7 +215,7 @@ namespace MSMove
             IntPtr handle = NativeMethods.FindWindow(className, windowName);
             if (handle == IntPtr.Zero)
             {
-                handle = NativeMethods.FindWindow(className, "*" + windowName);
+                HandleFromWindowName(NativeMethods.GetDesktopWindow(), windowName, ref handle);
                 if (handle == IntPtr.Zero)
                 {
                     return;
@@ -219,6 +224,221 @@ namespace MSMove
 
             Handle = handle;
             Refresh();
+        }
+
+        private static void HandleFromWindowName(IntPtr parentHandle, string windowName, ref IntPtr handleWindow)
+        {
+            IntPtr handle = parentHandle;
+            string caption = windowName;
+
+            if (handle == IntPtr.Zero)
+            {
+                return;
+            }
+
+            if (caption.StartsWith("*") && caption.EndsWith("*"))
+            {
+                caption = caption.Substring(1);
+                caption = caption.Substring(0, caption.Length - 1);
+
+                var we = new WindowExecutor(handle);
+                Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                if (we.Caption.IndexOf(caption) > -1)
+                {
+                    handleWindow = we.Handle;
+                    return;
+                }
+
+                handle = NativeMethods.GetWindow(new HandleRef(null, handle), NativeMethods.GW_CHILD);
+                if (handle == IntPtr.Zero)
+                {
+                    return;
+                }
+
+                we = new WindowExecutor(handle);
+                Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                if (we.Caption.IndexOf(caption) > -1)
+                {
+                    handleWindow = we.Handle;
+                    return;
+                }
+
+                while (handle != IntPtr.Zero && handleWindow == IntPtr.Zero)
+                {
+                    handle = NativeMethods.GetWindow(new HandleRef(null, handle), NativeMethods.GW_HWNDNEXT);
+                    if (handle != IntPtr.Zero)
+                    {
+                        // ==========================================================
+                        // Jak byśmy szukali zagnieżdżeń rekurencyjnych.
+                        // ==========================================================
+                        // HandleFromWindowName(handle, windowName, ref handleWindow);
+                        // ==========================================================
+                        // Aktywując powyższy kod zakomentuj poniższy.
+                        // ==========================================================
+                        // Szukamy tylko główne okna.
+                        // ==========================================================
+                        we = new WindowExecutor(handle);
+                        Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                        if (we.Caption.IndexOf(caption) > -1)
+                        {
+                            handleWindow = we.Handle;
+                            return;
+                        }
+                        // ==========================================================
+                    }
+                }
+            }
+            else if (caption.StartsWith("*"))
+            {
+                caption = caption.Substring(1);
+
+                var we = new WindowExecutor(handle);
+                Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                if (we.Caption.EndsWith(caption))
+                {
+                    handleWindow = we.Handle;
+                    return;
+                }
+
+                handle = NativeMethods.GetWindow(new HandleRef(null, handle), NativeMethods.GW_CHILD);
+                if (handle == IntPtr.Zero)
+                {
+                    return;
+                }
+
+                we = new WindowExecutor(handle);
+                Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                if (we.Caption.EndsWith(caption))
+                {
+                    handleWindow = we.Handle;
+                    return;
+                }
+
+                while (handle != IntPtr.Zero && handleWindow == IntPtr.Zero)
+                {
+                    handle = NativeMethods.GetWindow(new HandleRef(null, handle), NativeMethods.GW_HWNDNEXT);
+                    if (handle != IntPtr.Zero)
+                    {
+                        // ==========================================================
+                        // Jak byśmy szukali zagnieżdżeń rekurencyjnych.
+                        // ==========================================================
+                        // HandleFromWindowName(handle, windowName, ref handleWindow);
+                        // ==========================================================
+                        // Aktywując powyższy kod zakomentuj poniższy.
+                        // ==========================================================
+                        // Szukamy tylko główne okna.
+                        // ==========================================================
+                        we = new WindowExecutor(handle);
+                        Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                        if (we.Caption.EndsWith(caption))
+                        {
+                            handleWindow = we.Handle;
+                            return;
+                        }
+                        // ==========================================================
+                    }
+                }
+            }
+            else if (caption.EndsWith("*"))
+            {
+                caption = caption.Substring(0, caption.Length - 1);
+
+                var we = new WindowExecutor(handle);
+                Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                if (we.Caption.StartsWith(caption))
+                {
+                    handleWindow = we.Handle;
+                    return;
+                }
+
+                handle = NativeMethods.GetWindow(new HandleRef(null, handle), NativeMethods.GW_CHILD);
+                if (handle == IntPtr.Zero)
+                {
+                    return;
+                }
+
+                we = new WindowExecutor(handle);
+                Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                if (we.Caption.StartsWith(caption))
+                {
+                    handleWindow = we.Handle;
+                    return;
+                }
+
+                while (handle != IntPtr.Zero && handleWindow == IntPtr.Zero)
+                {
+                    handle = NativeMethods.GetWindow(new HandleRef(null, handle), NativeMethods.GW_HWNDNEXT);
+                    if (handle != IntPtr.Zero)
+                    {
+                        // ==========================================================
+                        // Jak byśmy szukali zagnieżdżeń rekurencyjnych.
+                        // ==========================================================
+                        // HandleFromWindowName(handle, windowName, ref handleWindow);
+                        // ==========================================================
+                        // Aktywując powyższy kod zakomentuj poniższy.
+                        // ==========================================================
+                        // Szukamy tylko główne okna.
+                        // ==========================================================
+                        we = new WindowExecutor(handle);
+                        Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                        if (we.Caption.StartsWith(caption))
+                        {
+                            handleWindow = we.Handle;
+                            return;
+                        }
+                        // ==========================================================
+                    }
+                }
+            }
+            else
+            {
+                var we = new WindowExecutor(handle);
+                Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                if (we.Caption == caption)
+                {
+                    handleWindow = we.Handle;
+                    return;
+                }
+
+                handle = NativeMethods.GetWindow(new HandleRef(null, handle), NativeMethods.GW_CHILD);
+                if (handle == IntPtr.Zero)
+                {
+                    return;
+                }
+
+                we = new WindowExecutor(handle);
+                Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                if (we.Caption == caption)
+                {
+                    handleWindow = we.Handle;
+                    return;
+                }
+
+                while (handle != IntPtr.Zero && handleWindow == IntPtr.Zero)
+                {
+                    handle = NativeMethods.GetWindow(new HandleRef(null, handle), NativeMethods.GW_HWNDNEXT);
+                    if (handle != IntPtr.Zero)
+                    {
+                        // ==========================================================
+                        // Jak byśmy szukali zagnieżdżeń rekurencyjnych.
+                        // ==========================================================
+                        // HandleFromWindowName(handle, windowName, ref handleWindow);
+                        // ==========================================================
+                        // Aktywując powyższy kod zakomentuj poniższy.
+                        // ==========================================================
+                        // Szukamy tylko główne okna.
+                        // ==========================================================
+                        we = new WindowExecutor(handle);
+                        Debug.WriteLine(string.Format("Handle: {0}; Caption: {1}", we.Handle.ToString(), we.Caption));
+                        if (we.Caption == caption)
+                        {
+                            handleWindow = we.Handle;
+                            return;
+                        }
+                        // ==========================================================
+                    }
+                }
+            }
         }
 
         internal void Refresh()
